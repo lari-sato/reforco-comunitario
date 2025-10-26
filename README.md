@@ -1,18 +1,122 @@
-- Parte 1 (N1): Definição do produto; Levantamento dos Requisitos; Modelagem;
-Arquitetura do software; Documentação de projeto.
-- Parte 2 (N1): Desenvolvimento do pipeline de Integração Contínua e Entrega Contínua.
-- Parte 3 (N2): Implementação da aplicação.
-- Parte 4 (N2): Testes; Implementação de requisitos não funcionais; Documentação final.
+# 📘 Reforço Comunitário
 
-## Documentação
-- Capítulo 1: Introdução. Descrição breve do projeto.
-- Capítulo 2: Definição da demanda. Criar subseções com as seguintes informações: o problema ou oportunidade percebida; a razão ou justificativa para esta demanda; a descrição sucinta do produto de software que será produzido; identificar os clientes, usuários e demais envolvidos/impactados com o produto; descrever, em linhas gerais, uais as principais etapas necessárias para construir este produto; identificar os principais critérios de qualidade para o produto.
-- Capítulo 3: Requisitos do produto. Deve ser construída uma tabela para organizar os requisitos; não esqueçam de incluir se é um requisito funcional [RF] ou não funcional [RNF]. Além disso, ordenem os requisitos por prioridade e adicionem esses requisitos ao backlog do produto.
-- Capítulo 4: Wireframes (protótipos de baixa fidelidade).
-- Capítulo 5: Modelagem “leve do sistema”.
-- Capítulo 6: Descrição da arquitetura do sistema (modelo) e das ferramentas que serão utilizadas (linguagem de programação, frameworks, etc).
-- Capítulo 7: Desenvolvimento. Descrever o processo de construção do sistema proposto. Descrever as tecnologias utilizadas para o desenvolvimento do sistema. Como o sistema foi modularizado. Indicar se alguma documentação poderia sofrer modificação.
-- Capítulo 8: Resultados. Apresentar as características e funcionalidades da aplicação desenvolvida. Apresentar “prints” de telas das funcionalidades principais. Fazer uma análise crítica do sistema desenvolvido, apontando os pontos fortes e fracos. Incluir (novamente) o link do projeto no GitHub; não esqueçer de subir os códigos da aplicação no repositório.
-- Capítulo 9: Conclusão e Trabalhos Futuros. Escrever a conclusão do projeto, revisando os pontos principais descritos até essa seção. Apontar quais melhorias no sistema poderiam ser exploradas em trabalhos futuros. Apontar trabalhos futuros que podem ser derivados do sistema proposto.
+## 📖 Sobre o Projeto
+O **Reforço Comunitário** é uma plataforma web gratuita que conecta **instrutores voluntários** e **alunos** que precisam de apoio educacional.  
+O objetivo é democratizar o acesso ao reforço escolar, fortalecendo comunidades e promovendo **educação inclusiva, solidária e contínua**.
 
-Obs: É recomendado que o documento seja produzido em LATEX.
+---
+
+## 🎯 Objetivo
+Reduzir desigualdades no acesso à educação, criando um ambiente seguro e acessível onde qualquer pessoa possa **ensinar ou aprender** de forma colaborativa.
+
+---
+
+## 🌍 Alinhamento Social
+O projeto contribui diretamente para o **ODS 4 da ONU – Educação de Qualidade**, garantindo:
+
+- **Acesso Equitativo:** reforço gratuito para todos.
+- **Aprendizagem ao Longo da Vida:** incentivo ao estudo contínuo.
+- **Solidariedade e Empatia:** fortalecimento comunitário por meio do voluntariado.
+
+---
+
+## ⚙️ Funcionalidades
+
+### 👩‍🎓 Aluno
+- Cadastro e login, por escolaridade.  
+- Busca de instrutores por disciplina ou tópico.  
+- Solicitação de videoaulas ou aulas ao-vivo.  
+- Avaliação de instrutores.  
+
+### 👨‍🏫 Instrutor
+- Cadastro e login, sendo necessária comprovação de certificação/diploma.  
+- Inserção de especialidades ou tópicos que leciona.  
+- Envio de videoaulas sob demanda, ou aulas ao-vivo.  
+- Aceitação, recusa ou remarcação de aulas.  
+
+### ⚖️ Ambos
+- Todas as funcionalidades citadas acima.
+- Denúncia de conduta inadequada.
+- Ensinar e aprender!
+
+---
+
+## 🧱 Arquitetura do Sistema
+
+### Camadas
+1. **Apresentação (Frontend):** Interface web em **React + TypeScript**.  
+2. **Negócio (Backend):** Lógica e regras em **Java + Spring Boot**.  
+3. **Persistência:** Comunicação entre backend e banco.  
+4. **Dados:** Armazenamento em **MariaDB**.  
+
+### Pipeline CI/CD
+Fluxo automatizado com **GitHub Actions** e **Jenkins**:  
+`Commit → Build → Test → Release → Deploy`
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+| Camada | Tecnologia | Função |
+|--------|-------------|--------|
+| Frontend | React + TypeScript | Interface responsiva e interativa |
+| Backend | Java + Spring Boot | Regras de negócio e APIs |
+| Banco de Dados | MariaDB + SQL | Armazenamento de dados |
+| Infraestrutura | Docker | Containerização |
+| CI/CD | GitHub Actions | Integração e deploy contínuos |
+
+---
+
+## ✅ Requisitos Principais
+
+### Requisitos Funcionais
+
+| Código | Descrição |
+|:-------:|------------|
+| **[RF01] Cadastro de Aluno:** | O usuário se cadastra como um aluno. |
+| **[RF02] Cadastro de Instrutor:** | O usuário se cadastra como um instrutor. |
+| **[RF03] Cadastro Aluno-Instrutor:** | O usuário se cadastra como aluno e instrutor simultaneamente. |
+| **[RF04] Login de Usuário:** | O usuário entra no sistema utilizando seu e-mail e senha. |
+| **[RF05] Inserir Especialidades do Instrutor:** | O usuário (instrutor) insere suas especialidades (tópicos) em seu perfil. |
+| **[RF06] Buscar Instrutor por Tópico:** | O usuário (aluno) busca um instrutor com base em suas necessidades. |
+| **[RF07] Videochamada de Aula:** | O usuário (aluno) realiza uma videochamada com um instrutor. |
+| **[RF08] Solicitar Agendamento de Aula:** | O usuário (aluno) solicita agendamento de aula por chamada com um instrutor. |
+| **[RF09] Responder Solicitação de Agendamento:** | O usuário (instrutor) aceita, recusa ou sugere outro agendamento. |
+| **[RF10] Solicitar Envio de Videoaula:** | O usuário (aluno) solicita uma videoaula ao instrutor. |
+| **[RF11] Responder Solicitação de Videoaula:** | O usuário (instrutor) envia o vídeo solicitado pelo aluno. |
+| **[RF12] Avaliar Instrutor:** | O usuário avalia o seu instrutor em uma escala de 1 a 5. |
+| **[RF13] Denunciar Contra Violação de Normas:** | Um usuário denuncia outro durante uma videochamada. |
+| **[RF14] Cancelar Agendamento Marcado:** | O usuário (instrutor) cancela o agendamento de uma aula. |
+
+
+### Requisitos Não Funcionais
+
+| Código | Descrição |
+|:-------:|------------|
+| **[RNF01]** | **Desempenho:** o sistema deve suportar pelo menos 500 usuários simultâneos sem degradação perceptível. |
+| **[RNF02]** | **Disponibilidade:** operação contínua (24x7) com uptime mínimo de 99%. |
+| **[RNF03]** | **Segurança de Dados:** criptografia de informações sensíveis e uso obrigatório de HTTPS. |
+| **[RNF04]** | **Usabilidade:** interface intuitiva, responsiva e acessível em desktop e dispositivos móveis. |
+| **[RNF05]** | **Portabilidade:** compatível com Chrome, Firefox, Edge e Safari. |
+| **[RNF06]** | **Escalabilidade:** deve ajustar recursos automaticamente conforme o aumento de usuários. |
+| **[RNF07]** | **Confiabilidade:** backup diário e restauração em até 24 horas após falha. |
+| **[RNF08]** | **Monitoramento:** videochamadas devem ser monitoradas para segurança dos usuários. |
+| **[RNF09]** | **Conformidade Legal:** aderência total à LGPD (Lei Geral de Proteção de Dados). |
+| **[RNF10]** | **Tempo de Resposta:** carregamento máximo de 3 segundos em condições normais. |
+| **[RNF11]** | **Manutenibilidade:** código modular, documentado e de fácil atualização. |
+
+---
+
+## 📈 Critérios de Qualidade
+- **Acessibilidade e Usabilidade:** interface limpa e intuitiva.  
+- **Segurança e Confiabilidade:** proteção de dados e sistema de denúncias.  
+- **Escalabilidade:** suporte ao crescimento da base de usuários.  
+
+---
+
+## 👥 Equipe
+
+- **Julia Santos Oliveira**
+- **Larissa Yuri Sato**
+- **Giovana Simões Franco**
+- **Beatriz Lima de Moura**
