@@ -1,18 +1,27 @@
-# versao default do yml
 name: CI Workflow
 
 on: [push, pull_request, schedule, workflow_dispatch]
 
-jobs: # defines one or more jobs that run as part of the workflow
+jobs:
   build:
     runs-on: windows-latest
+
+    defaults:
+      run:
+        working-directory: ref-comunitario  
+
     steps:
-    - uses: actions/checkout@v4 # Checks out your repository
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-    - name: Install dependencies
-      run: npm install
-    - name: Run tests
-      run: npm test
+      - uses: actions/checkout@v4  
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: ref-comunitario/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
