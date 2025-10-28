@@ -25,9 +25,7 @@ function Inner() {
       </main>
 
       {/* Rodapé (sempre renderizado) */}
-      <footer className="footer">
-        <small>© 2025 Reforço Comunitário</small>
-      </footer>
+      <div className="footer">© 2025 - Reforço Comunitário</div>
     </>
   );
 }
