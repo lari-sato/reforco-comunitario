@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "./pages/Home";
-import { Register } from "./pages/Register";
-import { Login } from "./pages/Login";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 import { Inbox } from "./pages/Inbox";
 import { Profile } from "./pages/Profile";
 import { Topics } from "./pages/Topics";

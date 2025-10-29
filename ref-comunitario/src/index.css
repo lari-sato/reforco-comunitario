@@ -33,8 +33,15 @@ body{
 .nav__search{margin:0 8px}
 .search-input{padding:8px 12px; border:1px solid #cccccc; border-radius:8px}
 
-/* ainda vou ver isso direito */
-.auth{padding:48px 24px;}
+/* ===== Footer (Rodapé) ===== */
+.footer{
+  margin: var(--s-7) 0 0 0;
+  padding: var(--s-4) 0;
+  text-align:center; color:var(--ink-60);
+  font-size:var(--small);
+  border-top:1px solid var(--ink-12);
+}
+
 
 /* ===== Home (Introdução) ===== */
 .home{
@@ -136,7 +143,7 @@ body{
   background:#000000;
 }
 
-/* ===== Responsividade ===== */
+/* Responsividade */
 @media (max-width:1024px){
   .home__logo{margin-top:32px}
   .home__title{font-size:32px; line-height:48px}
@@ -150,3 +157,168 @@ body{
   .btn{min-width:200px; height:56px; font-size:22px; line-height:32px}
 }
 
+/* ===== Auth (Login / Register) ===== */
+/* Tokens e base */
+:root{
+  --bg:#FFFFFF; --ink:#000; --ink-60:rgba(0,0,0,.60); --ink-35:rgba(0,0,0,.35);
+  --surface:#FFF; --radius-sm:6px; --radius-pill:999px;
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-7:32px; --s-8:40px;
+  --h1:40px; --h1-lh:60px; --p:16px; --small:13px;
+}
+.auth-page *, .auth-page *::before, .auth-page *::after{margin:0; padding:0; box-sizing:border-box}
+
+/* ==== Register ==== */
+.auth-page.register-page{
+  position:relative; min-height:100vh; width:100%;
+  background:var(--bg); display:flex; justify-content:center;
+  padding: calc(47px + var(--s-8)) var(--s-4) var(--s-8);
+}
+.auth-page.register-page .topbar{
+  position:fixed; inset:0 auto auto 0; height:47px; width:100%; background:#D9D9D9; z-index:10;
+}
+.auth-page.register-page .auth-form{
+  width:min(460px,100%); background:transparent; padding:0; border:none; box-shadow:none;
+}
+
+.auth-page.register-page .inline-hint{
+  margin-left: var(--s-3);
+  font-size: var(--small);
+  color: var(--ink-60);
+  font-style: italic;
+}
+
+/* Título + CTA curta */
+.auth-page.register-page .auth-form h3{
+  font-size:var(--h1); line-height:var(--h1-lh); font-weight:400; text-align:center; color:var(--ink); margin-bottom:var(--s-2);
+}
+.auth-page.register-page .auth-subcta{
+  text-align:center; font-size:var(--p); color:var(--ink-60); margin-bottom:var(--s-5);
+}
+.auth-page.register-page .auth-subcta a{ color:var(--ink); text-decoration:underline }
+
+/* Rótulos e campos */
+.auth-page label.field-label{
+  display:block;
+  font-size:var(--small);
+  color:var(--ink);
+  margin: var(--s-3) 0 var(--s-2);
+}
+
+.auth-page .field-box{
+  display:flex;
+  align-items:center;
+  height:52px;
+  background:var(--surface);
+  border:0.5px solid var(--ink);
+  padding:0 var(--s-4);
+  margin-bottom:var(--s-4);
+  border-radius:0;
+}
+
+.auth-page .field-box input,
+.auth-page .field-box select{
+  width:100%;
+  background:transparent;
+  border:none;
+  font-size:var(--small);
+  color:var(--ink);
+  outline:none;
+}
+
+.auth-page .field-box input::placeholder{
+  color:var(--ink-60);
+}
+
+.auth-page .field-box:has(input:focus),
+.auth-page .field-box:has(select:focus){
+  outline:2px solid var(--ink-60);
+  outline-offset:2px;
+}
+
+/* Seleção de Função (Aluno / Instrutor) */
+.auth-page.register-page .role-list{ margin-top:var(--s-2) }
+.auth-page.register-page .role-item{
+  display:flex; align-items:center; justify-content:space-between;
+  height:56px; background:var(--surface); border:0.5px solid var(--ink);
+  padding:0 var(--s-4); margin-bottom:var(--s-4); cursor:pointer; user-select:none;
+}
+.auth-page.register-page .role-item .label{ font-size:var(--small); color:var(--ink) }
+.auth-page.register-page .role-item .circle{
+  width:18px; height:18px; border-radius:50%; border:1px solid var(--ink); background:transparent; flex:0 0 18px;
+}
+/* múltipla seleção permitida */
+.auth-page.register-page .role-item.active .circle{ background:var(--ink); border-color:var(--ink) }
+.auth-page.register-page .role-item:hover{ background:#F7F7F7 }
+
+/* Escolaridade */
+.auth-page.register-page .edu-list{ margin-top:var(--s-2) }
+.auth-page.register-page .edu-item{
+  display:flex; flex-direction:column; gap:var(--s-2);
+  background:var(--surface); border:0.5px solid var(--ink); padding: var(--s-4); margin-bottom:var(--s-4);
+}
+.auth-page.register-page .edu-item .row{
+  display:flex; align-items:center; justify-content:space-between; min-height:28px; cursor:pointer;
+}
+.auth-page.register-page .edu-item .label{ font-size:var(--small); color:var(--ink) }
+.auth-page.register-page .edu-item .circle{ width:18px; height:18px; border-radius:50%; border:1px solid var(--ink) }
+.auth-page.register-page .edu-item .circle.active{ background:var(--ink); border-color:var(--ink) }
+.auth-page.register-page .edu-item:hover{ background:#F7F7F7 }
+
+/*  Anos logo abaixo da escolaridade selecionada */
+.auth-page.register-page .year-row{
+  display:none; 
+  flex-wrap:wrap; gap:var(--s-4); margin-top:var(--s-2);
+}
+.auth-page.register-page .edu-item.open > .year-row{ display:flex } 
+.auth-page.register-page .year-btn{
+  padding:10px 18px; border-radius:var(--radius-pill);
+  border:1px solid var(--ink-35); background:transparent; cursor:pointer; font-size:14px; color:var(--ink);
+}
+.auth-page.register-page .year-btn.active{ background:#D9D9D9; color:var(--ink); border-color:#D9D9D9 }
+.auth-page.register-page .year-btn:focus{ outline:2px solid var(--ink-60); outline-offset:2px }
+
+/* Upload de Certificação (Instrutores) */
+.auth-page.register-page .cert-upload{ display:flex; align-items:center; gap:var(--s-4); margin-top:var(--s-6) }
+.auth-page.register-page .cert-upload .upload-btn{
+  background:#D9D9D9; padding:12px 18px; border-radius:8px; border:none; cursor:pointer; font-size:var(--small); color:var(--ink);
+}
+
+/*  Botão OK  */
+.auth-page.register-page .ok-button{
+  width:191px; height:70px; margin: var(--s-7) auto 0 auto;
+  background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:32px; border:none; cursor:pointer;
+  position:static; transform:none;
+}
+
+/* ==== Login simples (usuário + senha) ===== */
+.auth-page.login-page{
+  min-height:100vh; display:flex; justify-content:center; align-items:flex-start;
+  padding: calc(47px + var(--s-8)) var(--s-4) var(--s-8); background:var(--bg);
+}
+.auth-page.login-page .topbar{ position:fixed; inset:0 auto auto 0; height:47px; width:100%; background:#D9D9D9; z-index:10 }
+.auth-page.login-page .auth-form{ width:min(420px,100%); background:transparent; padding:0; border:none; box-shadow:none }
+.auth-page.login-page h3{ font-size:var(--h1); line-height:var(--h1-lh); font-weight:400; text-align:center; color:var(--ink); margin-bottom:var(--s-2) }
+.auth-page.login-page .auth-subcta{ text-align:center; font-size:var(--p); color:var(--ink-60); margin-bottom:var(--s-5) }
+.auth-page.login-page .login-actions{ margin-top:var(--s-6) }
+.auth-page.login-page .ok-button {
+  display: block;             
+  margin: var(--s-6) auto 0;  
+  width: 191px;
+  height: 60px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Responsividade */
+@media (max-width:480px){
+  .auth-page.register-page, .auth-page.login-page{
+    padding: calc(47px + var(--s-6)) var(--s-3) var(--s-8);
+  }
+  .auth-page.register-page .ok-button{ width:160px; height:60px; font-size:24px }
+  .auth-page.login-page .ok-button{ width:160px; height:56px; font-size:22px }
+}
