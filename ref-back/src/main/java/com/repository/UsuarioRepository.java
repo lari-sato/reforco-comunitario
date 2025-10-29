@@ -1,2 +1,13 @@
-429: Too Many Requests
-For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service).
+package com.example.repository;
+
+import com.example.model.Instrutor;
+import com.example.model.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    Usuario buscarPorEmail(String email);
+
+    List<Instrutor> buscarPorMateria(List<String> materias);
+}
