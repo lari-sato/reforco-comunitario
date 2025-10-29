@@ -2,7 +2,7 @@ package com.example.service;
 
 
 import com.example.model.Usuario;
-import com.example.model.Insrutor;
+import com.example.model.Instrutor;
 
 import java.util.List;
 
