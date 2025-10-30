@@ -5,7 +5,7 @@ import Field from "../components/Field";
 import RoleSelector, { type Role } from "../components/RoleSelector";
 import EduSelector from "../components/EduSelector";
 import UploadCertification from "../components/UploadCertification";
-import OkButton from "../components/okButton";
+import OkButton from "../components/OkButton";
 
 const ESC_ALUNO = [
   "Ensino Fundamental Incompleto",
