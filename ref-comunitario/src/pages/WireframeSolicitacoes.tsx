@@ -17,8 +17,7 @@ export const WireframeSolicitacoes = (): JSX.Element => {
         img="vector-2-6.svg"
         imgClassName="solicitacoes-instance"
         imgClassNameOverride="solicitacoes-instance"
-        
-        // As props vector (organização que você fez): OK
+
         vector="video-icon-1.svg" 
         vector1="video-icon-2.svg"
         vector2="vector-35.svg" 
