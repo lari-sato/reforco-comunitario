@@ -12,7 +12,7 @@ export const Inbox = () => {
     <>
       <Topbar />
       <div className="inbox-content">
-        <h1 className="titulo">Inbox</h1>
+        <h1 className="titulo">Solicitações</h1>
 
         <div className="lista">
           {mensagens.map((m, index) => (
