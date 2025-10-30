@@ -6,10 +6,6 @@ jobs:
   build:
     runs-on: windows-latest
 
-    defaults:
-      run:
-        working-directory: ref-comunitario  
-
     steps:
       - uses: actions/checkout@v4  
 
@@ -22,9 +18,11 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        working-directory: ref-comunitario
 
       - name: Build project
         run: npm run build
+        working-directory: ref-comunitario
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -42,3 +40,4 @@ jobs:
 
       - name: Build Java project
         run: mvn clean verify --batch-mode
+        working-directory: ref-back
