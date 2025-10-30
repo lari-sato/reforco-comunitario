@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
 import Field from "../components/Field";
-import OkButton from "../components/okButton";
+import OkButton from "../components/OkButton";
 
 export default function Login() {
   const navigate = useNavigate();
