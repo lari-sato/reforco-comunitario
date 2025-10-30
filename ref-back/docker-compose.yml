@@ -1,0 +1,33 @@
+
+services:
+  # Serviço do Backend
+  backend:
+    build: . # Constrói o Dockerfile
+    container_name: reforco-comitente-app
+    ports:
+      - "8080:8080"
+    environment:
+      # Configuração do Spring Boot
+      SPRING_DATASOURCE_URL: jdbc:mariadb://database:3306/reforco_comunitario
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD} # Puxa a senha do arquivo .env
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+    
+    # Garante que o database inicia antes do backend
+    depends_on:
+      - database 
+
+  # Serviço do Banco de Dados (MariaDB)
+  database:
+    image: mariadb:lts
+    container_name: reforco-comunitario-db
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: reforco_comunitario # Cria o banco de dados
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
