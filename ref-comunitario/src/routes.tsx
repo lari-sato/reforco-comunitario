@@ -6,7 +6,7 @@ import { Inbox } from "./pages/Inbox";
 import { Profile } from "./pages/Profile";
 import { Topics } from "./pages/Topics";
 import { Tutors } from "./pages/Tutors";
-import { WireframeSolicitaes } from "./pages/WireframeSolicitaes";
+import { WireframeSolicitaes } from "./pages/WireframeSolicitacoes";
 
 
 export const AppRoutes = () => (
@@ -18,7 +18,7 @@ export const AppRoutes = () => (
     <Route path="/inbox" element={<Inbox />} />
     <Route path="/topics" element={<Topics />} />
     <Route path="/tutors" element={<Tutors />} />
-    <Route path="/solicitacoes" element={<WireframeSolicitaes />} />
+    <Route path="/solicitacoes" element={<WireframeSolicitacoes />} />
     <Route path="*" element={<Navigate to="/" />} />
   </Routes>
 );
