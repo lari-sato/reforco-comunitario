@@ -6,7 +6,7 @@ import { Inbox } from "./pages/Inbox";
 import { Profile } from "./pages/Profile";
 import { Topics } from "./pages/Topics";
 import { Tutors } from "./pages/Tutors";
-import { WireframeSolicitaes } from "./pages/WireframeSolicitacoes";
+import { WireframeSolicitacoes } from "./pages/WireframeSolicitacoes";
 
 
 export const AppRoutes = () => (
