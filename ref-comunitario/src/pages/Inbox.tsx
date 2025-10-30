@@ -1,5 +1,5 @@
 import Topbar from "../components/Topbar";
-import "./Inbox.css";
+import "../Inbox.css";
 
 export const Inbox = () => {
   const mensagens = Array.from({ length: 10 }, (_, i) => ({
