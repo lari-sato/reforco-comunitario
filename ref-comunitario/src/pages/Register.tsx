@@ -1,9 +1,13 @@
 import { useState, useEffect, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import AuthLayout from "../components/AuthLayout";
+import Field from "../components/Field";
+import RoleSelector, { type Role } from "../components/RoleSelector";
+import EduSelector from "../components/EduSelector";
+import UploadCertification from "../components/UploadCertification";
+import OkButton from "../components/okButton";
 
-type Role = "aluno" | "instrutor";
-
-const ALL_EDU = [
+const ESC_ALUNO = [
   "Ensino Fundamental Incompleto",
   "Ensino Fundamental Completo",
   "Ensino Médio Incompleto",
@@ -12,13 +16,13 @@ const ALL_EDU = [
   "Superior Completo",
 ];
 
-const INSTRUCTOR_EDU = [
+const ESC_INST = [
   "Ensino Fundamental Completo",
   "Ensino Médio Completo",
   "Superior Completo",
 ];
 
-const YEARS_BY_EDU: Record<string, string[]> = {
+const ANOS_ESC: Record<string, string[]> = {
   "Ensino Fundamental Incompleto": ["6º", "7º", "8º", "9º"],
   "Ensino Fundamental Completo": [],
   "Ensino Médio Incompleto": ["1º", "2º", "3º"],
@@ -27,133 +31,158 @@ const YEARS_BY_EDU: Record<string, string[]> = {
   "Superior Completo": [],
 };
 
+// Bolha de erro minimalista
+function ErrorBubble({ children }: { children: string }) {
+  return <span className="error-bubble">{children}</span>;
+}
+
 export default function Register() {
   const navigate = useNavigate();
+
+  // Campos básicos
+  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+
+  // Seleções
   const [roles, setRoles] = useState<Role[]>([]);
-  const [openEdu, setOpenEdu] = useState<string | null>(null);
   const [selectedEdu, setSelectedEdu] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
+
+  // Upload (instrutor)
+  const [certFile, setCertFile] = useState<File | null>(null);
+
+  // Exibição de erros
+  const [triedSubmit, setTriedSubmit] = useState(false);
 
   const hasAluno = roles.includes("aluno");
   const hasInstrutor = roles.includes("instrutor");
   const bothRoles = hasAluno && hasInstrutor;
   const instructorOnly = hasInstrutor && !hasAluno;
 
-  // Filtro de escolaridade por função
-  const EDU_FILTERED = bothRoles
-    ? ALL_EDU.slice(ALL_EDU.findIndex(e => e === "Ensino Fundamental Completo"))
+  const ESC_FILTRO = bothRoles
+    ? ESC_ALUNO.slice(ESC_ALUNO.findIndex(e => e === "Ensino Fundamental Completo"))
     : instructorOnly
-    ? INSTRUCTOR_EDU
-    : ALL_EDU;
+    ? ESC_INST
+    : ESC_ALUNO;
 
-  function toggleRole(role: Role) {
-    setRoles(prev => (prev.includes(role) ? prev.filter(r => r !== role) : [...prev, role]));
-  }
+  useEffect(() => {
+    if (selectedEdu && !ESC_FILTRO.includes(selectedEdu)) {
+      setSelectedEdu(null);
+      setSelectedYear(null);
+    }
+  }, [ESC_FILTRO, selectedEdu]);
 
-  function handleEduClick(edu: string) {
-    setSelectedEdu(edu);
-    setOpenEdu(prev => (prev === edu ? null : edu));
-    setSelectedYear(null);
-  }
+  // Validações
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const hasRole = roles.length > 0;
+  const eduOk = !!selectedEdu;
+  const yearsForEdu = selectedEdu ? (ANOS_ESC[selectedEdu] ?? []) : [];
+  const needsYear = yearsForEdu.length > 0;
+  const yearOk = needsYear ? !!selectedYear : true;
+  const needsCert = hasInstrutor;
+  const certOk = needsCert ? certFile !== null : true;
+
+  const allOk =
+    user.trim().length > 0 &&
+    emailOk &&
+    pass.trim().length > 0 &&
+    hasRole &&
+    eduOk &&
+    yearOk &&
+    certOk;
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    setTriedSubmit(true);
+    if (!allOk) return;
     navigate("/topics");
   }
 
-  // Garante consistência quando o filtro mudar
-  useEffect(() => {
-    if (selectedEdu && !EDU_FILTERED.includes(selectedEdu)) {
-      setSelectedEdu(null);
-      setOpenEdu(null);
-      setSelectedYear(null);
-    }
-  }, [EDU_FILTERED, selectedEdu]);
-
   return (
-    <div className={`auth-page register-page ${bothRoles ? "both-roles" : ""}`}>
-      <div className="topbar" />
-
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <h3>Registre-se já!</h3>
-        <p className="auth-subcta">
-          Já possui uma conta? <Link to="/login">Entrar</Link>
-        </p>
-
-        <label className="field-label">USUÁRIO</label>
-        <div className="field-box">
-          <input placeholder="Escolha um nome legal :)" />
-        </div>
-
-        <label className="field-label">E-MAIL</label>
-        <div className="field-box">
-          <input type="email" placeholder="nome@gmail.com" />
-        </div>
-
-        <label className="field-label">SENHA</label>
-        <div className="field-box">
-          <input type="password" placeholder="Use uma senha forte!" />
-        </div>
-
-        <label className="field-label">FUNÇÃO (SELECIONE UMA OU AMBAS)</label>
-        <div className="role-list">
-          {(["aluno", "instrutor"] as Role[]).map(r => (
-            <div
-              key={r}
-              className={`role-item ${roles.includes(r) ? "active" : ""}`}
-              onClick={() => toggleRole(r)}
-            >
-              <span className="label">{r === "aluno" ? "Aluno(a)" : "Instrutor(a)"}</span>
-              <span className="circle" />
-            </div>
-          ))}
-        </div>
-
-        <label className="field-label">ESCOLARIDADE</label>
-        <div className="edu-list">
-          {EDU_FILTERED.map(edu => {
-            const open = openEdu === edu;
-            const years = YEARS_BY_EDU[edu] ?? [];
-            return (
-              <div key={edu} className={`edu-item ${open ? "open" : ""}`}>
-                <div className="row" onClick={() => handleEduClick(edu)}>
-                  <span className="label">{edu}</span>
-                  <span className={`circle ${selectedEdu === edu ? "active" : ""}`} />
-                </div>
-                {open && years.length > 0 && (
-                  <div className="year-row">
-                    {years.map(y => (
-                      <button
-                        type="button"
-                        key={y}
-                        className={`year-btn ${selectedYear === y ? "active" : ""}`}
-                        onClick={() => setSelectedYear(y)}
-                      >
-                        {y}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Certificação (Instrutor) */}
-        {hasInstrutor && (
-          <>
-            <label className="field-label">
-              CERTIFICAÇÃO <span className="inline-hint">*NECESSÁRIO PARA INSTRUIR</span>
-            </label>
-            <div className="cert-upload">
-              <button type="button" className="upload-btn">ENVIAR</button>
-              <span className="hint">(PDF, PNG ou JPG)</span>
-            </div>
-          </>
+    <AuthLayout
+      variant="register"
+      title="Registre-se já!"
+      ctaText="Já possui uma conta?"
+      ctaLinkText="Entrar"
+      ctaHref="/login"
+      onSubmit={handleSubmit}
+    >
+      <Field label="USUÁRIO" htmlFor="reg-user">
+        <input
+          id="reg-user"
+          placeholder="Escolha um nome legal :)"
+          value={user}
+          onChange={(e) => setUser(e.target.value)}
+          aria-invalid={triedSubmit && user.trim() === "" ? "true" : "false"}
+        />
+        {triedSubmit && user.trim() === "" && (
+          <ErrorBubble>Preencha este campo.</ErrorBubble>
         )}
+      </Field>
 
-        <button type="submit" className="ok-button">OK</button>
-      </form>
-    </div>
+      <Field label="E-MAIL" htmlFor="reg-email">
+        <input
+          id="reg-email"
+          type="email"
+          placeholder="nome@gmail.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          aria-invalid={triedSubmit && !emailOk ? "true" : "false"}
+        />
+        {triedSubmit && !emailOk && (
+          <ErrorBubble>Preencha este campo.</ErrorBubble>
+        )}
+      </Field>
+
+      <Field label="SENHA" htmlFor="reg-pass">
+        <input
+          id="reg-pass"
+          type="password"
+          placeholder="Use uma senha forte!"
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          aria-invalid={triedSubmit && pass.trim() === "" ? "true" : "false"}
+        />
+        {triedSubmit && pass.trim() === "" && (
+          <ErrorBubble>Preencha este campo.</ErrorBubble>
+        )}
+      </Field>
+
+      <label className="field-label">FUNÇÃO (SELECIONE UMA OU AMBAS)</label>
+      <RoleSelector selected={roles} onChange={setRoles} />
+      {triedSubmit && !hasRole && (
+        <ErrorBubble>Preencha este campo.</ErrorBubble>
+      )}
+
+      <label className="field-label">ESCOLARIDADE</label>
+      <EduSelector
+        options={ESC_FILTRO}
+        yearsMap={ANOS_ESC}
+        selectedEdu={selectedEdu}
+        selectedYear={selectedYear}
+        onEduChange={setSelectedEdu}
+        onYearChange={setSelectedYear}
+      />
+      {triedSubmit && !eduOk && (
+        <ErrorBubble>Preencha este campo.</ErrorBubble>
+      )}
+      {triedSubmit && eduOk && needsYear && !yearOk && (
+        <ErrorBubble>Preencha este campo.</ErrorBubble>
+      )}
+
+      {hasInstrutor && (
+        <>
+          <UploadCertification onFile={(f) => setCertFile(f)} />
+          {triedSubmit && needsCert && !certOk && (
+            <ErrorBubble>Preencha este campo.</ErrorBubble>
+          )}
+        </>
+      )}
+
+      <OkButton disabled={!allOk} aria-disabled={!allOk}>
+        OK
+      </OkButton>
+    </AuthLayout>
   );
 }

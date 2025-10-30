@@ -16,8 +16,8 @@ function Inner() {
 
   return (
     <>
-      {/* se header estiver oculto (home/login/register) mostramos apenas a topbar */}
-      {hideHeader ? <div className="home__topbar" /> : <Header />}
+      {/* Mostra o header apenas quando não estiver na home/login/register */}
+      {!hideHeader && <Header />}
 
       {/* Conteúdo principal (sempre renderizado) */}
       <main className="main">

@@ -1,324 +1,491 @@
-/* ===== Base global ===== */
+/* ======= Base global ======= */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
 
-*{box-sizing:border-box}
-html,body,#root{height:100%}
-body{
-  margin:0;
-  font-family:Poppins,Roboto,Arial,sans-serif;
-  color:#1E1F1F; 
-  background:#ffffff; 
-  line-height:1.5;
+* {
+  box-sizing: border-box;
 }
 
-/* ===== Utilitários globais ===== */
-.container{
-  max-width:1440px;
-  margin-inline:auto;
-  padding-inline:24px;
+html, body, #root {
+  height: 100%;
 }
 
-/* ===== Header ===== */
-.header{padding:0}
-.header__inner{display:flex; align-items:center; justify-content:space-between; padding:8px 16px}
-.header__left{display:flex; align-items:center; gap:12px}
-.header__logo{width:80px; height:auto}
-.header__logoLink{display:inline-block}
-.header__nav{display:flex; align-items:center; gap:12px}
-.header > .home__topbar{
-  height:auto;
-  padding:6px 0;
-}
-.nav__link{color:#000000; text-decoration:underline; padding:6px 8px}
-.nav__search{margin:0 8px}
-.search-input{padding:8px 12px; border:1px solid #cccccc; border-radius:8px}
-
-/* ===== Footer (Rodapé) ===== */
-.footer{
-  margin: var(--s-7) 0 0 0;
-  padding: var(--s-4) 0;
-  text-align:center; color:var(--ink-60);
-  font-size:var(--small);
-  border-top:1px solid var(--ink-12);
+body {
+  margin: 0;
+  font-family: Poppins, Roboto, Arial, sans-serif;
+  color: #1E1F1F;
+  background: #FFFFFF;
+  line-height: 1.5;
 }
 
-
-/* ===== Home (Introdução) ===== */
-.home{
-  display:flex;
-  flex-direction:column;
-  min-height:100dvh;
+.container {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 24px;
 }
 
-/* Barra superior */
-.home__topbar{
-  background:#D9D9D9; 
-  width:100%;
-  height:48px; 
-  padding:0; 
+/* ======= Layout: Header e Footer ======= */
+
+.header {
+  padding: 0;
 }
 
-/* Seção de introdução */
-.home__intro{
-  position:relative;
-  padding-block:48px 24px;
-  background-color: #ffffff;
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
 }
 
-/* Logo central */
-.home__logo{
-  display:block;
-  width:160px;
-  height:auto;
-  margin:32px auto 16px;
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* Título (Reforço Comunitário) */
-.home__title{
-  margin:20px 0 8px;
-  font-weight:500;
-  font-size:40px;
-  line-height:60px;
-  text-align:center;
-  color:#1E1F1F;
+.header__logo {
+  width: 80px;
+  height: auto;
 }
 
-/* Descrição */
-.home__lead{
-  max-width:1047px;
-  margin:20px auto;
-  font-weight:500;
-  font-size:22px;
-  line-height:34px; 
-  text-align:center;
-  color:#000000;
-  padding-inline:16px;
+.header__logoLink {
+  display: inline-block;
 }
 
-/* Bloco de ações (Entrar/Cadastrar) */
-.home__actions{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:24px;
-  margin:56px auto 48px;
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* Botões */
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:200px;
-  height:52px; 
-  padding:0 16px;
-  border:1px solid #000000;
-  border-radius:8px;
-  background:#D9D9D9; 
-  color:#000000;
-  font-size:20px;
-  line-height:28px;
-  text-decoration:none;
-  cursor:pointer;
+.header > .home__topbar {
+  height: auto;
+  padding: 6px 0;
 }
 
-/* Divisores */
-.home__divider{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:16px;
-  margin:8px 0;
-  color:#000000;
-  font-size:24px;
-  line-height:32px;
-  width:100%;
-  max-width:500px;
-}
-.home__divider::before,
-.home__divider::after{
-  content:"";
-  flex:1 1 auto; 
-  height:1px;
-  background:#000000;
+.nav__link {
+  color: #000000;
+  text-decoration: underline;
+  padding: 6px 8px;
 }
 
-/* Responsividade */
-@media (max-width:1024px){
-  .home__logo{margin-top:32px}
-  .home__title{font-size:32px; line-height:48px}
-  .home__lead{font-size:18px; line-height:28px}
-  .btn{min-width:240px; height:64px; font-size:28px; line-height:42px}
+.footer {
+  margin: 32px 0 0 0;
+  padding: 16px 0;
+  text-align: center;
+  color: #00000099;
+  font-size: 13px;
+  border-top: 1px solid #0000001F;
 }
 
-@media (max-width:640px){
-  .home__lead{max-width:720px}
-  .home__title{font-size:28px; line-height:40px}
-  .btn{min-width:200px; height:56px; font-size:22px; line-height:32px}
+/* ======= Página: Home ======= */
+
+.home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 }
 
-/* ===== Auth (Login / Register) ===== */
-/* Tokens e base */
-:root{
-  --bg:#FFFFFF; --ink:#000; --ink-60:rgba(0,0,0,.60); --ink-35:rgba(0,0,0,.35);
-  --surface:#FFF; --radius-sm:6px; --radius-pill:999px;
-  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-7:32px; --s-8:40px;
-  --h1:40px; --h1-lh:60px; --p:16px; --small:13px;
-}
-.auth-page *, .auth-page *::before, .auth-page *::after{margin:0; padding:0; box-sizing:border-box}
-
-/* ==== Register ==== */
-.auth-page.register-page{
-  position:relative; min-height:100vh; width:100%;
-  background:var(--bg); display:flex; justify-content:center;
-  padding: calc(47px + var(--s-8)) var(--s-4) var(--s-8);
-}
-.auth-page.register-page .topbar{
-  position:fixed; inset:0 auto auto 0; height:47px; width:100%; background:#D9D9D9; z-index:10;
-}
-.auth-page.register-page .auth-form{
-  width:min(460px,100%); background:transparent; padding:0; border:none; box-shadow:none;
+.home__topbar {
+  background: #D9D9D9;
+  width: 100%;
+  height: 48px;
+  padding: 0;
 }
 
-.auth-page.register-page .inline-hint{
-  margin-left: var(--s-3);
-  font-size: var(--small);
-  color: var(--ink-60);
-  font-style: italic;
+.home__intro {
+  position: relative;
+  padding-block: 48px 24px;
+  background-color: #FFFFFF;
 }
 
-/* Título + CTA curta */
-.auth-page.register-page .auth-form h3{
-  font-size:var(--h1); line-height:var(--h1-lh); font-weight:400; text-align:center; color:var(--ink); margin-bottom:var(--s-2);
-}
-.auth-page.register-page .auth-subcta{
-  text-align:center; font-size:var(--p); color:var(--ink-60); margin-bottom:var(--s-5);
-}
-.auth-page.register-page .auth-subcta a{ color:var(--ink); text-decoration:underline }
-
-/* Rótulos e campos */
-.auth-page label.field-label{
-  display:block;
-  font-size:var(--small);
-  color:var(--ink);
-  margin: var(--s-3) 0 var(--s-2);
+.home__logo {
+  display: block;
+  width: 160px;
+  height: auto;
+  margin: 32px auto 16px;
 }
 
-.auth-page .field-box{
-  display:flex;
-  align-items:center;
-  height:52px;
-  background:var(--surface);
-  border:0.5px solid var(--ink);
-  padding:0 var(--s-4);
-  margin-bottom:var(--s-4);
-  border-radius:0;
+.home__title {
+  margin: 20px 0 8px;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 60px;
+  text-align: center;
+  color: #1E1F1F;
 }
 
-.auth-page .field-box input,
-.auth-page .field-box select{
-  width:100%;
-  background:transparent;
-  border:none;
-  font-size:var(--small);
-  color:var(--ink);
-  outline:none;
+.home__lead {
+  max-width: 1047px;
+  margin: 20px auto;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 34px;
+  text-align: center;
+  color: #000000;
+  padding-inline: 16px;
 }
 
-.auth-page .field-box input::placeholder{
-  color:var(--ink-60);
+.home__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin: 56px auto 48px;
 }
 
-.auth-page .field-box:has(input:focus),
-.auth-page .field-box:has(select:focus){
-  outline:2px solid var(--ink-60);
-  outline-offset:2px;
-}
-
-/* Seleção de Função (Aluno / Instrutor) */
-.auth-page.register-page .role-list{ margin-top:var(--s-2) }
-.auth-page.register-page .role-item{
-  display:flex; align-items:center; justify-content:space-between;
-  height:56px; background:var(--surface); border:0.5px solid var(--ink);
-  padding:0 var(--s-4); margin-bottom:var(--s-4); cursor:pointer; user-select:none;
-}
-.auth-page.register-page .role-item .label{ font-size:var(--small); color:var(--ink) }
-.auth-page.register-page .role-item .circle{
-  width:18px; height:18px; border-radius:50%; border:1px solid var(--ink); background:transparent; flex:0 0 18px;
-}
-/* múltipla seleção permitida */
-.auth-page.register-page .role-item.active .circle{ background:var(--ink); border-color:var(--ink) }
-.auth-page.register-page .role-item:hover{ background:#F7F7F7 }
-
-/* Escolaridade */
-.auth-page.register-page .edu-list{ margin-top:var(--s-2) }
-.auth-page.register-page .edu-item{
-  display:flex; flex-direction:column; gap:var(--s-2);
-  background:var(--surface); border:0.5px solid var(--ink); padding: var(--s-4); margin-bottom:var(--s-4);
-}
-.auth-page.register-page .edu-item .row{
-  display:flex; align-items:center; justify-content:space-between; min-height:28px; cursor:pointer;
-}
-.auth-page.register-page .edu-item .label{ font-size:var(--small); color:var(--ink) }
-.auth-page.register-page .edu-item .circle{ width:18px; height:18px; border-radius:50%; border:1px solid var(--ink) }
-.auth-page.register-page .edu-item .circle.active{ background:var(--ink); border-color:var(--ink) }
-.auth-page.register-page .edu-item:hover{ background:#F7F7F7 }
-
-/*  Anos logo abaixo da escolaridade selecionada */
-.auth-page.register-page .year-row{
-  display:none; 
-  flex-wrap:wrap; gap:var(--s-4); margin-top:var(--s-2);
-}
-.auth-page.register-page .edu-item.open > .year-row{ display:flex } 
-.auth-page.register-page .year-btn{
-  padding:10px 18px; border-radius:var(--radius-pill);
-  border:1px solid var(--ink-35); background:transparent; cursor:pointer; font-size:14px; color:var(--ink);
-}
-.auth-page.register-page .year-btn.active{ background:#D9D9D9; color:var(--ink); border-color:#D9D9D9 }
-.auth-page.register-page .year-btn:focus{ outline:2px solid var(--ink-60); outline-offset:2px }
-
-/* Upload de Certificação (Instrutores) */
-.auth-page.register-page .cert-upload{ display:flex; align-items:center; gap:var(--s-4); margin-top:var(--s-6) }
-.auth-page.register-page .cert-upload .upload-btn{
-  background:#D9D9D9; padding:12px 18px; border-radius:8px; border:none; cursor:pointer; font-size:var(--small); color:var(--ink);
-}
-
-/*  Botão OK  */
-.auth-page.register-page .ok-button{
-  width:191px; height:70px; margin: var(--s-7) auto 0 auto;
-  background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center;
-  font-weight:700; font-size:32px; border:none; cursor:pointer;
-  position:static; transform:none;
-}
-
-/* ==== Login simples (usuário + senha) ===== */
-.auth-page.login-page{
-  min-height:100vh; display:flex; justify-content:center; align-items:flex-start;
-  padding: calc(47px + var(--s-8)) var(--s-4) var(--s-8); background:var(--bg);
-}
-.auth-page.login-page .topbar{ position:fixed; inset:0 auto auto 0; height:47px; width:100%; background:#D9D9D9; z-index:10 }
-.auth-page.login-page .auth-form{ width:min(420px,100%); background:transparent; padding:0; border:none; box-shadow:none }
-.auth-page.login-page h3{ font-size:var(--h1); line-height:var(--h1-lh); font-weight:400; text-align:center; color:var(--ink); margin-bottom:var(--s-2) }
-.auth-page.login-page .auth-subcta{ text-align:center; font-size:var(--p); color:var(--ink-60); margin-bottom:var(--s-5) }
-.auth-page.login-page .login-actions{ margin-top:var(--s-6) }
-.auth-page.login-page .ok-button {
-  display: block;             
-  margin: var(--s-6) auto 0;  
-  width: 191px;
-  height: 60px;
-  background: var(--ink);
-  color: #fff;
-  border: none;
-  font-weight: 700;
-  font-size: 24px;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  background: #D9D9D9;
+  color: #000000;
+  font-size: 20px;
+  line-height: 28px;
+  text-decoration: none;
   cursor: pointer;
 }
 
-/* Responsividade */
-@media (max-width:480px){
-  .auth-page.register-page, .auth-page.login-page{
-    padding: calc(47px + var(--s-6)) var(--s-3) var(--s-8);
+.home__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 8px 0;
+  color: #000000;
+  font-size: 24px;
+  line-height: 32px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.home__divider::before,
+.home__divider::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: #000000;
+}
+
+/* Home: responsividade */
+
+@media (max-width: 1024px) {
+  .home__logo { margin-top: 32px; }
+  .home__title { font-size: 32px; line-height: 48px; }
+  .home__lead { font-size: 18px; line-height: 28px; }
+  .btn { min-width: 240px; height: 64px; font-size: 28px; line-height: 42px; }
+}
+
+@media (max-width: 640px) {
+  .home__lead { max-width: 720px; }
+  .home__title { font-size: 28px; line-height: 40px; }
+  .btn { min-width: 200px; height: 56px; font-size: 22px; line-height: 32px; }
+}
+
+/* ======= Componentes compartilhados ======= */
+
+/* Topbar */
+.topbar {
+  position: fixed;
+  inset: 0 auto auto 0;
+  height: 47px;
+  width: 100%;
+  background: #D9D9D9;
+  z-index: 10;
+}
+
+/* Field (label + field-box) */
+
+.field-label {
+  display: block;
+  font-size: 13px;
+  color: #000000;
+  margin: 12px 0 8px;
+}
+
+.field-box {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  background: #FFFFFF;
+  border: 0.5px solid #000000;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  border-radius: 0;
+}
+
+.field-box input,
+.field-box select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  color: #000000;
+  outline: none;
+  font-family: Poppins, Roboto, Arial, sans-serif;
+}
+
+.field-box input::placeholder {
+  color: #00000099;
+  font-family: Poppins, Roboto, Arial, sans-serif;
+}
+
+.field-box:has(input:focus),
+.field-box:has(select:focus) {
+  outline: 2px solid #00000099;
+  outline-offset: 2px;
+}
+
+/* Botão */
+
+.ok-button {
+  display: block;
+  width: 191px;
+  height: 70px;
+  margin: 32px auto 0 auto;
+  background: #000000;
+  color: #FFFFFF;
+  border: none;
+  font-weight: 700;
+  font-size: 32px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s ease-in-out;
+}
+
+.ok-button:hover {
+  background: #1A1A1A;
+}
+
+.ok-button:disabled,
+.ok-button[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* RoleSelector */
+
+.role-list { margin-top: 8px; }
+
+.role-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  background: #FFFFFF;
+  border: 0.5px solid #000000;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.role-item .label { font-size: 13px; color: #000000; }
+
+.role-item .circle {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1px solid #000000; background: transparent; flex: 0 0 18px;
+}
+
+.role-item.active .circle { background: #000000; border-color: #000000; }
+.role-item:hover { background: #F7F7F7; }
+
+/* EduSelector */
+
+.edu-list { margin-top: 8px; }
+
+.edu-item {
+  display: flex; flex-direction: column; gap: 8px;
+  background: #FFFFFF; border: 0.5px solid #000000;
+  padding: 16px; margin-bottom: 16px;
+}
+
+.edu-item .row {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 28px; cursor: pointer;
+}
+
+.edu-item .label { font-size: 13px; color: #000000; }
+
+.edu-item .circle {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1px solid #000000;
+}
+
+.edu-item .circle.active { background: #000000; border-color: #000000; }
+.edu-item:hover { background: #F7F7F7; }
+
+.year-row {
+  display: none; flex-wrap: wrap; gap: 16px; margin-top: 8px;
+}
+
+.edu-item.open > .year-row { display: flex; }
+
+.year-btn {
+  padding: 10px 18px; border-radius: 999px;
+  border: 1px solid #00000059; background: transparent; cursor: pointer;
+  font-size: 14px; color: #000000;
+}
+
+.year-btn.active { background: #D9D9D9; color: #000000; border-color: #D9D9D9; }
+
+.year-btn:focus { outline: 2px solid #00000099; outline-offset: 2px; }
+
+/* UploadCert */
+
+.inline-hint {
+  margin-left: 12px;
+  font-size: 13px;
+  color: #00000099;
+  font-style: italic;
+}
+
+.cert-upload {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.cert-upload .upload-btn {
+  background: #D9D9D9;
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: #000000;
+}
+
+/* Barra de Pesquisa */
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+  background: #FFFFFF;
+  border: 1px solid #CCCCCC;
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin-left: 25px; 
+  transition: border-color 0.2s ease-in-out;
+}
+
+.search-bar:focus-within {
+  border-color: #000000;
+}
+
+.search-bar__input {
+  flex: 1 1 auto;
+  height: 36px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #000000;
+  padding: 0 8px;
+  font-family: 'Poppins', Roboto, Arial, sans-serif;
+}
+
+.search-bar__input::placeholder {
+  color: #00000099;
+}
+
+/* ===== Página: Login e Register ===== */
+
+.auth-page { background: #FFFFFF; }
+
+.auth-page .auth-form {
+  background: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.auth-page.register-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 87px 16px 40px;
+}
+
+.auth-page.register-page .auth-form { width: min(460px, 100%); }
+
+.auth-page.register-page .auth-form h3 {
+  font-size: 40px;
+  line-height: 60px;
+  font-weight: 400;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.auth-page.register-page .auth-subcta {
+  text-align: center;
+  font-size: 16px;
+  color: #00000099;
+  margin-bottom: 20px;
+}
+
+/* CTA links em preto nas duas páginas */
+.auth-subcta a {
+  color: #000000;
+  text-decoration: underline;
+  transition: color .2s ease-in-out;
+}
+
+.auth-subcta a:hover { color: #333333; }
+
+.auth-page.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 87px 16px 40px;
+}
+
+.auth-page.login-page .auth-form { width: min(420px, 100%); }
+
+.auth-page.login-page h3 {
+  font-size: 40px;
+  line-height: 60px;
+  font-weight: 400;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.auth-page.login-page .auth-subcta {
+  text-align: center;
+  font-size: 16px;
+  color: #00000099;
+  margin-bottom: 20px;
+}
+
+/* Mais espaço entre campos do login */
+.auth-page.login-page .field-box { margin-bottom: 24px; }
+
+/* Links estado ativo */
+a:active,
+.nav__link:active,
+.auth-subcta a:active { color: #7A7A7A; }
+
+/* Auth: responsividade */
+
+@media (max-width: 480px) {
+  .auth-page.register-page { padding: 71px 12px 40px; }
+  .auth-page.login-page { padding: 71px 12px 40px; }
+
+  .ok-button {
+    width: 160px;
+    height: 60px;
+    font-size: 24px;
   }
-  .auth-page.register-page .ok-button{ width:160px; height:60px; font-size:24px }
-  .auth-page.login-page .ok-button{ width:160px; height:56px; font-size:22px }
 }
