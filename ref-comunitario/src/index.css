@@ -495,10 +495,11 @@ a:active,
 .inbox-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 60px 2rem 2rem;
+  justify-content: center; /* centraliza verticalmente */
+  min-height: 100vh; /* ocupa a altura total da tela */
+  align-items: center; /* mantém centralização horizontal */
+  padding: 0 2rem; /* padding lateral se quiser */
 }
-
 
 .titulo {
   text-align: center;
