@@ -1,8 +1,10 @@
-package com.model;
+package back.api.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -10,12 +12,12 @@ import lombok.Setter;
 @Table(name = "Instrutor_Topico")
 public class Instrutor_Topico {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_usuario_instrutor")
-    private Long id_usuario_instrutor;
+    private UUID id_usuario_instrutor;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_topico")
-    private Long id_topico;
+    private UUID id_topico;
 }

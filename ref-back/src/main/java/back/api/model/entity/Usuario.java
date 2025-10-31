@@ -1,9 +1,12 @@
-package back.api.model;
+package back.api.model.entity;
 
+import back.api.enums.EscolaridadeEnum;
 import back.api.enums.TipoEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -11,9 +14,9 @@ import lombok.Setter;
 @Table(name = "Usuario")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_usuario")
-    private Long id;
+    private UUID id;
 
     @Column(name = "nome", nullable = false, length = 255)
     private String nome;
@@ -28,6 +31,13 @@ public class Usuario {
     @Column(name = "tipo_usuario", nullable = false)
     private TipoEnum tipo;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "escolaridade", nullable = false)
+    private EscolaridadeEnum escolaridade;
+
     @Column(name = "avaliacao_media", precision = 3, scale = 2)
-    private String escolaridade;
+    private String avaliacao;
+
+    @Column(name = "caminho_certificado", length = 255)
+    private String certificado;
 }
