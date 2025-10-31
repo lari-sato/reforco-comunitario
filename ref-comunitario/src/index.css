@@ -555,27 +555,3 @@ a:active,
   vertical-align: middle;
 }
 
-.inbox-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;     
-  justify-content: flex-start;
-  min-height: 100vh;
-  padding-top: 80px;      
-  background-color: #fff;
-}
-
-.inbox-content .titulo {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.inbox-content .lista {
-  width: 100%;
-  max-width: 800px;        
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
