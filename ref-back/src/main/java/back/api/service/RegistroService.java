@@ -1,6 +1,5 @@
 package back.api.service;
 
-
 import back.api.model.entity.Usuario;
 import back.api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
