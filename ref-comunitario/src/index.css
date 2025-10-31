@@ -574,5 +574,22 @@ a:active,
   width: 100%;
   max-width: 800px;
 }
+.inbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 2rem 2rem;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.lista {
+  width: 100%;
+  max-w
 
 
