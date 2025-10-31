@@ -546,3 +546,6 @@ a:active,
 .material-icons {
   font-size: 20px;
 }
+.inbox-content {
+  padding: 80px 4rem 2rem; 
+}
