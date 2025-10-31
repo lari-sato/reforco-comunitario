@@ -1,7 +1,7 @@
 package back.api.service;
 
 
-import back.api.model.Usuario;
+import back.api.model.entity.Usuario;
 
 import java.util.List;
 

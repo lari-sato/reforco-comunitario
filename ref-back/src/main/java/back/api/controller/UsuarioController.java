@@ -1,6 +1,6 @@
 package back.api.controller;
 
-import back.api.model.Usuario;
+import back.api.model.entity.Usuario;
 import  back.api.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
