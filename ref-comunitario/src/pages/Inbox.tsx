@@ -1,5 +1,3 @@
-import Topbar from "../components/Topbar";
-
 export const Inbox = () => {
   const mensagens = Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
@@ -10,7 +8,6 @@ export const Inbox = () => {
 
   return (
     <>
-      <Topbar />
       <div className="inbox-content">
         <h1 className="titulo">Solicitações</h1>
 
