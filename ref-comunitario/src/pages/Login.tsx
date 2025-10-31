@@ -3,19 +3,32 @@ import { useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
 import Field from "../components/Field";
 import OkButton from "../components/OkButton";
+import { apiGet } from "../lib/api";
+import type { Usuario } from "../Types";
 
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!email.trim() || !senha.trim()) return;
-    navigate("/topics");
-  }
-
   const isDisabled = !email.trim() || !senha.trim();
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    if (isDisabled) return;
+
+    try {
+      // GET /api/registro/login?email=...&senha=...
+      const usuario = await apiGet<Usuario>("/api/registro/login", {
+        email,
+        senha,
+      });
+      console.log("Usuário logado:", usuario);
+      navigate("/topics");
+    } catch (err) {
+      console.error("Falha no login:", err);
+      alert("Usuário ou senha inválidos.");
+    }
+  }
 
   return (
     <AuthLayout
@@ -48,7 +61,9 @@ export default function Login() {
         />
       </Field>
 
-      <OkButton disabled={isDisabled}>OK</OkButton>
+      <OkButton disabled={isDisabled} aria-disabled={isDisabled}>
+        OK
+      </OkButton>
     </AuthLayout>
   );
 }

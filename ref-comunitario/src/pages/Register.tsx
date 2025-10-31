@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect, useMemo, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
 import Field from "../components/Field";
@@ -6,6 +6,7 @@ import RoleSelector, { type Role } from "../components/RoleSelector";
 import EduSelector from "../components/EduSelector";
 import UploadCertification from "../components/UploadCertification";
 import OkButton from "../components/OkButton";
+import { apiPost, apiPostForm } from "../lib/api";
 
 const ESC_ALUNO = [
   "Ensino Fundamental Incompleto",
@@ -14,13 +15,13 @@ const ESC_ALUNO = [
   "Ensino Médio Completo",
   "Superior Incompleto",
   "Superior Completo",
-];
+] as const;
 
 const ESC_INST = [
   "Ensino Fundamental Completo",
   "Ensino Médio Completo",
   "Superior Completo",
-];
+] as const;
 
 const ANOS_ESC: Record<string, string[]> = {
   "Ensino Fundamental Incompleto": ["6º", "7º", "8º", "9º"],
@@ -31,53 +32,47 @@ const ANOS_ESC: Record<string, string[]> = {
   "Superior Completo": [],
 };
 
-// Bolha de erro minimalista
-function ErrorBubble({ children }: { children: string }) {
-  return <span className="error-bubble">{children}</span>;
-}
-
 export default function Register() {
   const navigate = useNavigate();
 
-  // Campos básicos
+  // básicos
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
-  // Seleções
+  // seleções
   const [roles, setRoles] = useState<Role[]>([]);
   const [selectedEdu, setSelectedEdu] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
 
-  // Upload (instrutor)
+  // upload
   const [certFile, setCertFile] = useState<File | null>(null);
-
-  // Exibição de erros
-  const [triedSubmit, setTriedSubmit] = useState(false);
 
   const hasAluno = roles.includes("aluno");
   const hasInstrutor = roles.includes("instrutor");
   const bothRoles = hasAluno && hasInstrutor;
   const instructorOnly = hasInstrutor && !hasAluno;
 
-  const ESC_FILTRO = bothRoles
-    ? ESC_ALUNO.slice(ESC_ALUNO.findIndex(e => e === "Ensino Fundamental Completo"))
-    : instructorOnly
-    ? ESC_INST
-    : ESC_ALUNO;
+  const ESC_FILTRO = useMemo(() => {
+    if (bothRoles) {
+      const i = ESC_ALUNO.findIndex((e) => e === "Ensino Fundamental Completo");
+      return ESC_ALUNO.slice(i);
+    }
+    if (instructorOnly) return [...ESC_INST];
+    return [...ESC_ALUNO];
+  }, [bothRoles, instructorOnly]);
 
   useEffect(() => {
-    if (selectedEdu && !ESC_FILTRO.includes(selectedEdu)) {
+    if (selectedEdu && !ESC_FILTRO.includes(selectedEdu as any)) {
       setSelectedEdu(null);
       setSelectedYear(null);
     }
   }, [ESC_FILTRO, selectedEdu]);
 
-  // Validações
+  // validações
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const hasRole = roles.length > 0;
-  const eduOk = !!selectedEdu;
-  const yearsForEdu = selectedEdu ? (ANOS_ESC[selectedEdu] ?? []) : [];
+  const yearsForEdu = selectedEdu ? ANOS_ESC[selectedEdu] ?? [] : [];
   const needsYear = yearsForEdu.length > 0;
   const yearOk = needsYear ? !!selectedYear : true;
   const needsCert = hasInstrutor;
@@ -88,15 +83,44 @@ export default function Register() {
     emailOk &&
     pass.trim().length > 0 &&
     hasRole &&
-    eduOk &&
+    !!selectedEdu &&
     yearOk &&
     certOk;
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setTriedSubmit(true);
     if (!allOk) return;
-    navigate("/topics");
+
+    const basePayload = {
+      usuario: user,
+      email,
+      senha: pass,
+      roles,                     // ["aluno"], ["instrutor"] ou ambos
+      escolaridade: selectedEdu, // string
+      ano: selectedYear,         // string | null
+    };
+
+    try {
+      if (certFile) {
+        const form = new FormData();
+        form.append("usuario", basePayload.usuario);
+        form.append("email", basePayload.email);
+        form.append("senha", basePayload.senha);
+        form.append("roles", JSON.stringify(basePayload.roles));
+        form.append("escolaridade", basePayload.escolaridade || "");
+        form.append("ano", basePayload.ano || "");
+        form.append("certificacao", certFile, certFile.name);
+
+        await apiPostForm("/api/registro/cadastro", form);
+      } else {
+        await apiPost("/api/registro/cadastro", basePayload);
+      }
+
+      navigate("/topics");
+    } catch (err) {
+      console.error("Falha no cadastro:", err);
+      alert("Erro ao registrar usuário.");
+    }
   }
 
   return (
@@ -114,11 +138,8 @@ export default function Register() {
           placeholder="Escolha um nome legal :)"
           value={user}
           onChange={(e) => setUser(e.target.value)}
-          aria-invalid={triedSubmit && user.trim() === "" ? "true" : "false"}
+          required
         />
-        {triedSubmit && user.trim() === "" && (
-          <ErrorBubble>Preencha este campo.</ErrorBubble>
-        )}
       </Field>
 
       <Field label="E-MAIL" htmlFor="reg-email">
@@ -128,11 +149,8 @@ export default function Register() {
           placeholder="nome@gmail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          aria-invalid={triedSubmit && !emailOk ? "true" : "false"}
+          required
         />
-        {triedSubmit && !emailOk && (
-          <ErrorBubble>Preencha este campo.</ErrorBubble>
-        )}
       </Field>
 
       <Field label="SENHA" htmlFor="reg-pass">
@@ -142,43 +160,24 @@ export default function Register() {
           placeholder="Use uma senha forte!"
           value={pass}
           onChange={(e) => setPass(e.target.value)}
-          aria-invalid={triedSubmit && pass.trim() === "" ? "true" : "false"}
+          required
         />
-        {triedSubmit && pass.trim() === "" && (
-          <ErrorBubble>Preencha este campo.</ErrorBubble>
-        )}
       </Field>
 
       <label className="field-label">FUNÇÃO (SELECIONE UMA OU AMBAS)</label>
       <RoleSelector selected={roles} onChange={setRoles} />
-      {triedSubmit && !hasRole && (
-        <ErrorBubble>Preencha este campo.</ErrorBubble>
-      )}
 
       <label className="field-label">ESCOLARIDADE</label>
       <EduSelector
-        options={ESC_FILTRO}
+        options={ESC_FILTRO as string[]}
         yearsMap={ANOS_ESC}
         selectedEdu={selectedEdu}
         selectedYear={selectedYear}
         onEduChange={setSelectedEdu}
         onYearChange={setSelectedYear}
       />
-      {triedSubmit && !eduOk && (
-        <ErrorBubble>Preencha este campo.</ErrorBubble>
-      )}
-      {triedSubmit && eduOk && needsYear && !yearOk && (
-        <ErrorBubble>Preencha este campo.</ErrorBubble>
-      )}
 
-      {hasInstrutor && (
-        <>
-          <UploadCertification onFile={(f) => setCertFile(f)} />
-          {triedSubmit && needsCert && !certOk && (
-            <ErrorBubble>Preencha este campo.</ErrorBubble>
-          )}
-        </>
-      )}
+      {hasInstrutor && <UploadCertification onFile={(f) => setCertFile(f)} />}
 
       <OkButton disabled={!allOk} aria-disabled={!allOk}>
         OK

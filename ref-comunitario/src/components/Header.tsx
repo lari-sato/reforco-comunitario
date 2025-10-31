@@ -1,23 +1,14 @@
 import logo from "../assets/logo/logo.png";
 import { NavLink, Link } from "react-router-dom";
-import { useState } from "react";
-import SearchBar from "../components/SearchBar";
+import { SearchBar } from "../components/SearchBar";
 
-export const Header = () => {
-  const [query, setQuery] = useState("");
-
-  const handleSearch = (term: string) => {
-    setQuery(term);
-    console.log("Buscar:", term);
-    // Aqui você pode integrar navegação, filtro, etc.
-  };
-
+export function Header() {
   return (
     <header className="header">
       <div className="home__topbar">
         <div className="header__inner container">
           <div className="header__left">
-            <Link to="/topics" className="header__logoLink">
+            <Link to="/" className="header__logoLink">
               <img
                 src={logo}
                 alt="Reforço Comunitário"
@@ -25,8 +16,7 @@ export const Header = () => {
               />
             </Link>
 
-            {/* Componente de busca */}
-            <SearchBar value={query} onChange={handleSearch} />
+            <SearchBar />
           </div>
 
           <nav className="header__nav">
@@ -41,4 +31,4 @@ export const Header = () => {
       </div>
     </header>
   );
-};
+}
