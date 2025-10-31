@@ -549,3 +549,8 @@ a:active,
 .inbox-content {
   padding: 80px 4rem 2rem; 
 }
+.material-icons {
+  font-size: 26px;
+  color: #000; /* ou #4caf50 se quiser verde */
+  vertical-align: middle;
+}
