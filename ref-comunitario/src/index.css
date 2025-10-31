@@ -491,22 +491,28 @@ a:active,
 }
 
 /* inbox */
+
 .inbox-content {
-  padding: 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 2rem 2rem;
 }
 
+
 .titulo {
+  text-align: center;
   font-size: 1.8rem;
   margin-bottom: 1rem;
   color: #000;
 }
-
 .lista {
   border: 1px solid #000;
   border-radius: 4px;
   overflow: hidden;
   width: 100%;
   max-width: 800px;
+  margin: 0 auto; /* centraliza horizontalmente */
 }
 
 .linha {
@@ -554,42 +560,4 @@ a:active,
   color: #000; /* ou #4caf50 se quiser verde */
   vertical-align: middle;
 }
-.inbox-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 60px 4rem 2rem;
-}
-
-.titulo {
-  text-align: center;
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #000;
-}
-
-.lista {
-  width: 100%;
-  max-width: 800px;
-}
-.inbox-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 60px 2rem 2rem;
-}
-
-.titulo {
-  text-align: center;
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #000;
-}
-
-.lista {
-  width: 100%;
-  max-w
-
 
