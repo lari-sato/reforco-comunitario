@@ -24,6 +24,6 @@ public class InstrutorService {
     }
 
     public Usuario perfilInstrutor(UUID id) {
-        return usuarioRepository.perfilInstrutor(id);
+        return usuarioRepository.findById(id).orElse(null);
     }
 }

@@ -8,6 +8,7 @@ import back.api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,10 +22,11 @@ public class UsuarioService {
     private SolicitacaoRepository solicitacaoRepository;
 
     public Usuario verPerfil(UUID id) {
-        return usuarioRepository.verPerfil(id);
+        // Função gerada automaticamente pelo Spring
+        return usuarioRepository.findById(id).orElse(null);
     }
 
     public List<SolicitacaoVideoaula> solicitacoes(UUID id) {
-        return solicitacaoRepository.solicitacoes(id);
+        return Collections.singletonList(solicitacaoRepository.findById(id).orElse(null));
     }
 }

@@ -8,11 +8,5 @@ import java.util.UUID;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, UUID> {
 
-    Usuario perfilInstrutor(UUID id);
-
-    Usuario verPerfil(UUID id);
-
     Usuario buscaPorEmail(String email);
-
-    void salvar(Usuario usuario);
 }

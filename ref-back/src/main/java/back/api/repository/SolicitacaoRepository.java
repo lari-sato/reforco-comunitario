@@ -9,5 +9,4 @@ import java.util.UUID;
 
 public interface SolicitacaoRepository extends JpaRepository<SolicitacaoVideoaula, UUID> {
 
-    List<SolicitacaoVideoaula> solicitacoes(UUID id);
 }

@@ -25,7 +25,7 @@ public class RegistroService {
         if (buscaPorEmail(usuario.getEmail()) != null) return false;
 
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        usuarioRepository.salvar(usuario);
+        usuarioRepository.save(usuario);
 
         return true;
     }
