@@ -554,3 +554,31 @@ a:active,
   color: #000; /* ou #4caf50 se quiser verde */
   vertical-align: middle;
 }
+
+.inbox-page {
+  display: flex;
+  justify-content: center;   /* centraliza horizontalmente */
+  align-items: flex-start;   /* mantém o topo visível */
+  min-height: 100vh;         /* ocupa toda a altura da tela */
+  padding-top: 80px;         /* espaço abaixo do header */
+  background-color: #FFFFFF;
+}
+
+.inbox-container {
+  width: 100%;
+  max-width: 800px;          
+  margin: 0 auto;
+}
+
+.inbox-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.inbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
