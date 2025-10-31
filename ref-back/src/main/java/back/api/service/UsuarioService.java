@@ -1,8 +1,8 @@
-package com.example.service;
+package back.api.service;
 
-import com.example.model.Instrutor;
-import com.example.model.Usuario;
-import com.example.repository.UsuarioRepository;
+
+import back.api.model.Usuario;
+import back.api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class UsuarioService {
         return usuarioRepository.buscarPorEmail(email);
     }
 
-    public List<Instrutor> buscarPorMateria(List<String> materias) {
+    public List<Usuario> buscarPorMateria(List<String> materias) {
         return usuarioRepository.buscarPorMateria(materias);
     }
 }

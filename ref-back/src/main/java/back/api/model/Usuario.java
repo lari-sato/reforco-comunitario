@@ -1,6 +1,6 @@
-package com.model;
+package back.api.model;
 
-import com.enums.TipoEnum;
+import back.api.enums.TipoEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
