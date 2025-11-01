@@ -4,9 +4,9 @@ import back.api.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -14,19 +14,17 @@ import java.util.UUID;
 @Table(name = "Agendamento")
 public class Agendamento {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_agendamento")
-    private UUID id_agendamento;
+    private Long id_agendamento;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_aluno")
-    private UUID id_aluno;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", insertable = true, updatable = true)
+    private Usuario aluno;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_instrutor")
-    private UUID id_instrutor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
+    private Usuario instrutor;
 
     @Column(name = "data_hora", nullable = false)
     private LocalDateTime data_hora;
@@ -34,4 +32,7 @@ public class Agendamento {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private StatusEnum status;
+
+    @OneToOne(mappedBy = "agendamento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Aula aula;
 }

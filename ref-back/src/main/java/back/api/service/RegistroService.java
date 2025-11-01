@@ -16,13 +16,13 @@ public class RegistroService {
     private PasswordEncoder passwordEncoder;
 
     public Usuario login(String email, String senha) {
-        Usuario usuario = buscaPorEmail(email);
+        Usuario usuario = usuarioRepository.findByEmail(email);
         if (usuario != null && usuario.getSenha().equals(senha)) return usuario;
         return null;
     }
 
     public boolean cadastro(Usuario usuario) {
-        if (buscaPorEmail(usuario.getEmail()) != null) return false;
+        if (usuarioRepository.findByEmail(usuario.getEmail()) != null) return false;
 
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         usuarioRepository.save(usuario);
@@ -30,7 +30,4 @@ public class RegistroService {
         return true;
     }
 
-    public Usuario buscaPorEmail(String email) {
-        return usuarioRepository.buscaPorEmail(email);
-    }
 }

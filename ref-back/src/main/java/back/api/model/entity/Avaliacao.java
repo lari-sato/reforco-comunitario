@@ -3,9 +3,9 @@ package back.api.model.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -13,19 +13,18 @@ import java.util.UUID;
 @Table(name = "Avaliacao")
 public class Avaliacao {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_avaliacao")
-    private UUID id_avaliacao;
+    private Long id_avaliacao;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_aluno")
-    private UUID id_aluno;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    @Where(clause = "tipo_usuario = 'INSTRUTOR'")
+    private Usuario instrutor;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_instrutor")
-    private UUID id_instrutor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_topico", nullable = false)
+    private Topico topico;
 
     @Column(name = "nota", nullable = false)
     private Integer nota;

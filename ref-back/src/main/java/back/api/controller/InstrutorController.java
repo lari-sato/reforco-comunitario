@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @Tag(name = "Instrutores")
@@ -53,7 +52,7 @@ public class InstrutorController {
             }
     )
     @GetMapping("/perfil_instrutor")
-    public Usuario perfilInstrutor(@RequestParam UUID id) {
+    public Usuario perfilInstrutor(@RequestParam Long id) {
         return instrutorService.perfilInstrutor(id);
     }
 }

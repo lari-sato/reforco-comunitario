@@ -4,36 +4,34 @@ import back.api.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "SolicitacaoVideoaula")
 public class SolicitacaoVideoaula {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_solicitacao")
-    private UUID id_solicitacao;
+    private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_aluno")
-    private UUID id_aluno;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", insertable = true, updatable = true)
+    private Usuario aluno;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_instrutor")
-    private UUID id_instrutor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
+    private Usuario instrutor;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_topico")
-    private UUID id_topico;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_topico", nullable = false)
+    private Topico topico;
 
-    @Column(name = "descricao_solicitacao")
+    @Column(name = "descricao_solicitacao", columnDefinition = "TEXT")
     private String descricao;
 
     @Enumerated(EnumType.STRING)
@@ -41,8 +39,8 @@ public class SolicitacaoVideoaula {
     private StatusEnum status;
 
     @Column(name = "arquivo_video", length = 255)
-    private String video;
+    private String arquivoVideo;
 
-    @Column(name = "data_solicitacao")
-    private LocalDateTime data;
+    @Column(name = "data_solicitacao", nullable = false)
+    private LocalDateTime dataSolicitacao;
 }

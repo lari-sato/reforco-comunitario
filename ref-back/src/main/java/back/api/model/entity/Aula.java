@@ -4,22 +4,19 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Entity
 @Getter
 @Setter
 @Table(name = "Aula")
 public class Aula {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_aula")
-    private UUID id_aula;
+    private Long id_aula;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_agendamento")
-    private UUID id_agendamento;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_agendamento", nullable = false, unique = true)
+    private Agendamento agendamento;
 
     @Column(name = "link_videochamada", length = 255)
     private String link;

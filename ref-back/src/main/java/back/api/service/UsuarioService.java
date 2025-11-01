@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UsuarioService {
@@ -21,12 +20,12 @@ public class UsuarioService {
     @Autowired
     private SolicitacaoRepository solicitacaoRepository;
 
-    public Usuario verPerfil(UUID id) {
+    public Usuario verPerfil(Long id) {
         // Função gerada automaticamente pelo Spring
         return usuarioRepository.findById(id).orElse(null);
     }
 
-    public List<SolicitacaoVideoaula> solicitacoes(UUID id) {
+    public List<SolicitacaoVideoaula> solicitacoes(Long id) {
         return Collections.singletonList(solicitacaoRepository.findById(id).orElse(null));
     }
 }

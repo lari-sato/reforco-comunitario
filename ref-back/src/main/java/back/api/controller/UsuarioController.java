@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
-
 
 @RestController
 @Tag(name = "Usuários")
@@ -36,7 +34,7 @@ public class UsuarioController {
             }
     )
     @GetMapping("/perfil")
-    public Usuario verPerfil(@RequestParam UUID id) {
+    public Usuario verPerfil(@RequestParam Long id) {
         return usuarioService.verPerfil(id);
     }
 
@@ -55,7 +53,7 @@ public class UsuarioController {
             }
     )
     @GetMapping("/solicitacoes")
-    public List<SolicitacaoVideoaula> solicitacoes(@RequestParam UUID id) {
+    public List<SolicitacaoVideoaula> solicitacoes(@RequestParam Long id) {
         return usuarioService.solicitacoes(id);
     }
 }

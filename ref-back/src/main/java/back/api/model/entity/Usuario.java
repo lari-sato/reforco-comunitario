@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Getter
@@ -14,9 +16,9 @@ import java.util.UUID;
 @Table(name = "Usuario")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
-    private UUID id;
+    private Long id;
 
     @Column(name = "nome", nullable = false, length = 255)
     private String nome;
@@ -40,4 +42,13 @@ public class Usuario {
 
     @Column(name = "caminho_certificado", length = 255)
     private String certificado;
+
+    // Apenas para usuários que são INSTRUTOR ou AMBOS
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "Instrutor_Topico",
+            joinColumns = @JoinColumn(name = "id_usuario_instrutor"),
+            inverseJoinColumns = @JoinColumn(name = "id_topico")
+    )
+    private Set<Topico> topicosEspecialidade = new HashSet<>();
 }

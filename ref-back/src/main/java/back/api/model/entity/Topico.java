@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -12,10 +13,14 @@ import java.util.UUID;
 @Table(name = "Topico")
 public class Topico {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_topico")
-    private UUID id;
+    private Long id;
 
-    @Column(name = "nome", nullable = false, length = 100)
+    @Column(name = "nome", unique = true, nullable = false, length = 100)
     private String nome;
+
+    @ManyToMany(mappedBy = "topicosEspecialidade", fetch =
+            FetchType.LAZY)
+    private Set<Usuario> instrutores = new HashSet<>();
 }
