@@ -1,10 +1,12 @@
 import logo from '../assets/logo/logo.png';
+import Topbar from '../components/Topbar';
 
 export function Home() {
   return (
    <div className="home">
 
   <section className="home__intro container">
+    <Topbar/>
     <img className="home__logo" src={logo} alt="Logo Reforço Comunitário" />
     <h1 className="home__title">Reforço Comunitário</h1>
 

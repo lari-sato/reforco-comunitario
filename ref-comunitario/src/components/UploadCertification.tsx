@@ -5,7 +5,7 @@ type Props = {
   onFile?: (file: File) => void;
 };
 
-export default function UploadCertification({
+export function UploadCertification({
   label = "CERTIFICAÇÃO",
   hint = "*necessário para instruir",
   accept = ".pdf,.png,.jpg,.jpeg",

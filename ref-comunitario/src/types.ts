@@ -1,19 +1,16 @@
+export type Role = "aluno" | "instrutor";
+
 export interface Usuario {
   id: number;
   nome: string;
-  email: string;
-  roles: ("aluno" | "instrutor")[];
-  escolaridade?: string;
-  ano?: string | null;
+  email?: string;
+  materias?: string[]; 
+  roles?: Role[];
 }
 
-export type Busca =
-  | { id: number; nome: string; materia: string }
+export interface Instrutor extends Usuario {}
 
-export type InstrutorResult = {
+export interface Topico {
   id: number;
-  nome: string;
-  materias: string[]; 
-};
-
- 
+  nome: string; 
+}

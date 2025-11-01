@@ -46,6 +46,7 @@ body {
 .header__logo {
   width: 80px;
   height: auto;
+  display: block;
 }
 
 .header__logoLink {
@@ -495,6 +496,7 @@ a:active,
 .topics-page {
   background: #FFFFFF;
   min-height: 100vh;
+  font-family: Poppins, Roboto, Arial, sans-serif;
 }
 
 .topics-hero {
@@ -555,9 +557,10 @@ a:active,
   font-size: 16px;
   line-height: 24px;
   color: #000000;
+  text-align: center;
+  font-family: Poppins, Roboto, Arial, sans-serif;
 }
 
-/* Botão “Buscar Tutores” */
 .topics-cta {
   display: flex;
   justify-content: center;
@@ -567,16 +570,26 @@ a:active,
   width: 395px;
   height: 71px;
   background: #D9D9D9;
-  border: 1px solid #000000;
+  border: 2px solid #000000;
   border-radius: 10px;
-  font-weight: 400;
-  font-size: 36px;
+  text-align: center;
+  font-size: 35px;
   line-height: 54px;
   color: #000000;
   cursor: pointer;
   transition: background .15s ease-in-out;
+  font-family: Poppins, Roboto, Arial, sans-serif;
 }
 .topics-cta .btn-tutores:hover { background: #BFBFBF; }
+
+.btn-tutores:disabled,
+.btn-tutores[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #E0E0E0;
+  color: #777;
+  border-color: #CCC;
+}
 
 /* Tópicos: responsividade */
 @media (max-width: 1024px) {
@@ -591,3 +604,138 @@ a:active,
   .topics-cta .btn-tutores { width: 260px; height: 56px; font-size: 22px; line-height: 32px; }
 }
 
+/* ===== Página: Tutores ===== */
+.tutors {
+  background: #fff;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1236px;       
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.tutors__hint {
+  margin: 24px 0 16px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+  color: #171717;
+}
+
+.tutors__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0 12px;
+}
+.tutors__title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  color: #000;
+}
+.tutors__filter {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background: #fff;
+  position: relative;
+  cursor: pointer;
+}
+.tutors__filter::before,
+.tutors__filter::after {
+  content: "";
+  position: absolute;
+  left: 6px; right: 6px;
+  height: 2px; background: #000;
+}
+.tutors__filter::before { top: 9px; }
+.tutors__filter::after  { bottom: 9px; }
+
+.tutors__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px 36px;
+  margin: 16px 0 32px;
+}
+
+.tutor {
+  border: 2px solid #000;
+  border-radius: 10px;
+  padding: 16px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tutor__avatar {
+  width: 136px;
+  height: 136px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  background: #fff;
+}
+.tutor__name {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #000;
+  text-align: center;
+}
+.tutor__desc {
+  margin-top: 2px;
+  font-size: 10px;
+  line-height: 14px;
+  color: #000;
+  text-align: center;
+}
+
+/* paginação central */
+.tutors__pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin: 8px 0 28px;
+}
+.pager__btn {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  background: #fff;
+  cursor: default;     
+}
+.pager__label {
+  font-size: 16px;
+  color: #000;
+}
+
+.tutors__footer {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 40px;
+}
+.btn-voltar {
+  width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #D9D9D9;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+}
+
+/* responsividade */
+@media (max-width: 1100px) {
+  .tutors__grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 800px) {
+  .tutors__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .tutors__grid { grid-template-columns: 1fr; }
+}

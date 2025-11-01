@@ -4,7 +4,7 @@ import AuthLayout from "../components/AuthLayout";
 import Field from "../components/Field";
 import RoleSelector, { type Role } from "../components/RoleSelector";
 import EduSelector from "../components/EduSelector";
-import UploadCertification from "../components/UploadCertification";
+import { UploadCertification } from "../components/UploadCertification";
 import OkButton from "../components/OkButton";
 import { apiPost, apiPostForm } from "../lib/api";
 
@@ -35,17 +35,14 @@ const ANOS_ESC: Record<string, string[]> = {
 export default function Register() {
   const navigate = useNavigate();
 
-  // básicos
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
-  // seleções
   const [roles, setRoles] = useState<Role[]>([]);
   const [selectedEdu, setSelectedEdu] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
 
-  // upload
   const [certFile, setCertFile] = useState<File | null>(null);
 
   const hasAluno = roles.includes("aluno");
@@ -69,7 +66,6 @@ export default function Register() {
     }
   }, [ESC_FILTRO, selectedEdu]);
 
-  // validações
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const hasRole = roles.length > 0;
   const yearsForEdu = selectedEdu ? ANOS_ESC[selectedEdu] ?? [] : [];
@@ -79,46 +75,36 @@ export default function Register() {
   const certOk = needsCert ? certFile !== null : true;
 
   const allOk =
-    user.trim().length > 0 &&
-    emailOk &&
-    pass.trim().length > 0 &&
-    hasRole &&
-    !!selectedEdu &&
-    yearOk &&
-    certOk;
+    user.trim() && emailOk && pass.trim() && hasRole && !!selectedEdu && yearOk && certOk;
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!allOk) return;
 
-    const basePayload = {
-      usuario: user,
-      email,
-      senha: pass,
-      roles,                     // ["aluno"], ["instrutor"] ou ambos
-      escolaridade: selectedEdu, // string
-      ano: selectedYear,         // string | null
-    };
-
     try {
       if (certFile) {
         const form = new FormData();
-        form.append("usuario", basePayload.usuario);
-        form.append("email", basePayload.email);
-        form.append("senha", basePayload.senha);
-        form.append("roles", JSON.stringify(basePayload.roles));
-        form.append("escolaridade", basePayload.escolaridade || "");
-        form.append("ano", basePayload.ano || "");
+        form.append("usuario", user);
+        form.append("email", email);
+        form.append("senha", pass);
+        form.append("roles", JSON.stringify(roles));
+        form.append("escolaridade", selectedEdu || "");
+        form.append("ano", selectedYear || "");
         form.append("certificacao", certFile, certFile.name);
-
         await apiPostForm("/api/registro/cadastro", form);
       } else {
-        await apiPost("/api/registro/cadastro", basePayload);
+        await apiPost("/api/registro/cadastro", {
+          usuario: user,
+          email,
+          senha: pass,
+          roles,
+          escolaridade: selectedEdu,
+          ano: selectedYear,
+        });
       }
-
       navigate("/topics");
     } catch (err) {
-      console.error("Falha no cadastro:", err);
+      console.error(err);
       alert("Erro ao registrar usuário.");
     }
   }
@@ -177,11 +163,9 @@ export default function Register() {
         onYearChange={setSelectedYear}
       />
 
-      {hasInstrutor && <UploadCertification onFile={(f) => setCertFile(f)} />}
+      {hasInstrutor && <UploadCertification onFile={setCertFile} />}
 
-      <OkButton disabled={!allOk} aria-disabled={!allOk}>
-        OK
-      </OkButton>
+      <OkButton disabled={!allOk} aria-disabled={!allOk}>OK</OkButton>
     </AuthLayout>
   );
 }

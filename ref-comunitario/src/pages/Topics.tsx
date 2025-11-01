@@ -1,93 +1,108 @@
-// src/pages/Topics.tsx
-import { useEffect, useState } from "react";
-import { useSearchParams, Link } from "react-router-dom";
-import type { Usuario } from "../Types";
+/* A integração com o back-end está comentada. Terminaremos de implementar
+essa página quando a API de tópicos estiver pronta. */
 
-type Card = { id: string; titulo: string };
+import { useState } from "react";
+//import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+//import { getTopicos } from "../lib/topics";
+import type { Topico } from "../types";
 
-function getNome(u: Usuario | any) {
-  return u?.nome ?? u?.nomeCompleto ?? u?.email ?? "Usuário";
-}
-function getMateria(u: Usuario | any) {
-  if (Array.isArray(u?.subjects)) return u.subjects.join(", ");
-  return u?.materia ?? u?.assunto ?? "Sem tópico";
-}
+  // Mock de matérias 
+  const MOCK_TOPICOS: Topico[] = [
+    { id: 1, nome: "Matemática" },
+    { id: 2, nome: "Português" },
+    { id: 3, nome: "Inglês" },
+    { id: 4, nome: "Física" },
+    { id: 5, nome: "Química" },
+    { id: 6, nome: "Biologia" },
+    { id: 7, nome: "História" },
+    { id: 8, nome: "Geografia" },
+    { id: 9, nome: "Redação" },
+    { id: 10, nome: "Programação" },
+    { id: 11, nome: "Artes" },
+    { id: 12, nome: "Educação Financeira" },
+  ];
 
 export function Topics() {
-  const [params] = useSearchParams();
-  const q = (params.get("q") || "").trim();
-  const [data, setData] = useState<Usuario[] | any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const [topicos] = useState<Topico[]>(MOCK_TOPICOS);
+  //const [topicos, setTopicos] = useState<Topico[]>([]);
+  //const [loading, setLoading] = useState(false);
+  //const [err, setErr] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string[]>([]);
 
-  const mockCards: Card[] = Array.from({ length: 12 }, (_, i) => ({
-    id: `t-${i + 1}`,
-    titulo: `Tópico ${i + 1}`,
-  }));
-
-  useEffect(() => {
-    let active = true;
-    async function run() {
-      if (!q) {
-        setData([]);
-        return;
-      }
+  /*useEffect(() => {
+    let alive = true;
+    (async () => {
       try {
-        setLoading(true);
         setErr(null);
-        //const res = await buscarPorMateria(q); quando integrar
-        const res: any[] = []; 
-        if (active) setData(res);
+        setLoading(true);
+        const data = await getTopicos();
+        if (alive) setTopicos(data ?? []);
       } catch {
-        if (active) setErr("Erro ao buscar matérias.");
+        if (alive) setErr("Erro ao carregar matérias.");
       } finally {
-        if (active) setLoading(false);
+        if (alive) setLoading(false);
       }
-    }
-    run();
-    return () => { active = false; };
-  }, [q]);
+    })();
+    return () => { alive = false; };
+  }, []); */
+
+  function alternarMaterias(nome: string) {
+    setSelected((prev) =>
+      prev.includes(nome) ? prev.filter((x) => x !== nome) : [...prev, nome]
+    );
+  }
+
+  function buscarTutores() {
+    if (selected.length === 0) return;
+    const params = new URLSearchParams();
+    selected.forEach((m) => params.append("materias", m));
+    navigate(`/tutors?${params.toString()}`);
+  }
 
   return (
     <main className="topics-page">
       <section className="topics-hero">
         <h1>Bem-Vindo(a)!</h1>
-        <p>Selecione um tópico para começar.</p>
+        <p>Selecione pelo menos um tópico para começar.</p>
       </section>
 
-      {q ? (
-        <div className="container" style={{ maxWidth: 876, paddingInline: 16 }}>
-          <h2 style={{ margin: "0 0 16px 0", fontWeight: 400 }}>
-            Resultados para “{q}”
-          </h2>
-          {loading && <p>Carregando...</p>}
-          {err && <p>{err}</p>}
-          {!loading && !err && data.length === 0 && <p>Nenhum resultado encontrado.</p>}
+      <div className="container" style={{ maxWidth: 876, paddingInline: 16 }}>
+        {/*loading && <p>Carregando…</p>}
+        {err && <p>{err}</p>*/}
 
-          <ul>
-            {data.map((u) => (
-              <li key={u.id}>{getNome(u)} – {getMateria(u)}</li>
-            ))}
-          </ul>
+        <section className="topics-grid">
+          {topicos.map((t) => (
+            <article
+              key={t.id}
+              className="topic-card"
+              onClick={() => alternarMaterias(t.nome)}
+              style={{
+                outline: selected.includes(t.nome) 
+                ? "3px solid #000" 
+                : "none",
+                cursor: "pointer",
+              }}
+              aria-pressed={selected.includes(t.nome)}
+            >
+              <div className="topic-card__thumb" />
+              <div className="topic-card__title">{t.nome}</div>
+            </article>
+          ))}
+        </section>
+
+        <div className="topics-cta">
+          <button
+            className="btn-tutores"
+            onClick={buscarTutores}
+            disabled={selected.length === 0}
+            aria-disabled={selected.length === 0}
+          >
+            Buscar Tutores
+          </button>
         </div>
-      ) : (
-        <>
-          <section className="topics-grid">
-            {mockCards.map((c) => (
-              <article key={c.id} className="topic-card">
-                <div className="topic-card__thumb" />
-                <div className="topic-card__title">{c.titulo}</div>
-              </article>
-            ))}
-          </section>
-
-          <div className="topics-cta">
-            <Link to="/tutors" className="btn-tutores">
-              Buscar Tutores
-            </Link>
-          </div>
-        </>
-      )}
+      </div>
     </main>
   );
 }

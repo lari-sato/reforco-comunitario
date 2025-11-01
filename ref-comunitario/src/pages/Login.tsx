@@ -3,31 +3,20 @@ import { useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
 import Field from "../components/Field";
 import OkButton from "../components/OkButton";
-import { apiGet } from "../lib/api";
-import type { Usuario } from "../Types";
+import { apiPost } from "../lib/api";
 
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const isDisabled = !email.trim() || !senha.trim();
+
+  const disabled = !email.trim() || !senha.trim();
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (isDisabled) return;
-
-    try {
-      // GET /api/registro/login?email=...&senha=...
-      const usuario = await apiGet<Usuario>("/api/registro/login", {
-        email,
-        senha,
-      });
-      console.log("Usuário logado:", usuario);
-      navigate("/topics");
-    } catch (err) {
-      console.error("Falha no login:", err);
-      alert("Usuário ou senha inválidos.");
-    }
+    if (disabled) return;
+    await apiPost("/api/registro/login", { email, senha });
+    navigate("/topics");
   }
 
   return (
@@ -61,9 +50,7 @@ export default function Login() {
         />
       </Field>
 
-      <OkButton disabled={isDisabled} aria-disabled={isDisabled}>
-        OK
-      </OkButton>
+      <OkButton disabled={disabled} aria-disabled={disabled}>OK</OkButton>
     </AuthLayout>
   );
 }
