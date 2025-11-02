@@ -492,27 +492,22 @@ a:active,
 
 /* inbox */
 
-.inbox-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 60px 2rem 2rem;
+inbox-content {
+  padding: 2rem 4rem;
 }
 
-
 .titulo {
-  text-align: center;
   font-size: 1.8rem;
   margin-bottom: 1rem;
   color: #000;
 }
+
 .lista {
   border: 1px solid #000;
   border-radius: 4px;
   overflow: hidden;
   width: 100%;
   max-width: 800px;
-  margin: 0 auto; /* centraliza horizontalmente */
 }
 
 .linha {
