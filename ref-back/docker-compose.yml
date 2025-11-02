@@ -11,8 +11,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mariadb://database:3306/reforco_comunitario
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD} # Puxa a senha do arquivo .env
-      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
-    
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
     # Garante que o database inicia antes do backend
     depends_on:
       - database 

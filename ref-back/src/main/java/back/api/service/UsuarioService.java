@@ -1,0 +1,31 @@
+package back.api.service;
+
+
+import back.api.model.entity.SolicitacaoVideoaula;
+import back.api.model.entity.Usuario;
+import back.api.repository.SolicitacaoRepository;
+import back.api.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
+
+@Service
+public class UsuarioService {
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private SolicitacaoRepository solicitacaoRepository;
+
+    public Usuario verPerfil(Long id) {
+        // Função gerada automaticamente pelo Spring
+        return usuarioRepository.findById(id).orElse(null);
+    }
+
+    public List<SolicitacaoVideoaula> solicitacoes(Long id) {
+        return Collections.singletonList(solicitacaoRepository.findById(id).orElse(null));
+    }
+}
