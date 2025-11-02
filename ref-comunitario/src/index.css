@@ -495,16 +495,10 @@ a:active,
 .inbox-content {
   display: flex;
   flex-direction: column;
-  /* Removemos 'justify-content: center' 
-    pois ele centraliza verticalmente (no meio da tela) 
-    e conflita com o seu 'padding-top: 60px'.
-  */
-  min-height: 100vh; /* Garante que o layout ocupe a altura toda */
-  align-items: center; /* Centraliza o .titulo e o .lista horizontalmente */
-  
-  /* Este é o padding que você definiu na segunda regra e que será usado: */
-  padding: 60px 4rem 2rem; 
+  align-items: center;
+  padding: 60px 2rem 2rem;
 }
+
 
 .titulo {
   text-align: center;
@@ -558,9 +552,11 @@ a:active,
 .material-icons {
   font-size: 20px;
 }
+.inbox-content {
+  padding: 60px 4rem 2rem; 
+}
 .material-icons {
   font-size: 26px;
   color: #000; /* ou #4caf50 se quiser verde */
   vertical-align: middle;
 }
-
