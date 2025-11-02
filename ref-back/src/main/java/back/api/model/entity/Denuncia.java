@@ -19,12 +19,12 @@ public class Denuncia {
 
     // Usuário que realizou a denúncia
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_denunciante", nullable = false)
+    @JoinColumn(name = "id_denunciante", referencedColumnName = "id_usuario", nullable = false)
     private Usuario denunciante;
 
     // O usuário que foi denunciado
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_denunciado", nullable = false)
+    @JoinColumn(name = "id_denunciado", referencedColumnName = "id_usuario", nullable = false)
     private Usuario denunciado;
 
     @Column(name = "motivo", nullable = false)

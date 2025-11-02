@@ -15,7 +15,7 @@ public class Aula {
     private Long id_aula;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_agendamento", nullable = false, unique = true)
+    @JoinColumn(name = "id_agendamento", referencedColumnName = "id_agendamento", nullable = false, unique = true)
     private Agendamento agendamento;
 
     @Column(name = "link_videochamada", length = 255)

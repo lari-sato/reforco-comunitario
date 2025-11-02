@@ -18,7 +18,7 @@ public class Avaliacao {
     private Long id_avaliacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", nullable = false)
+    @JoinColumn(name = "id_isntrutor", referencedColumnName = "id_usuario", nullable = false)
     @Where(clause = "tipo_usuario = 'INSTRUTOR'")
     private Usuario instrutor;
 
