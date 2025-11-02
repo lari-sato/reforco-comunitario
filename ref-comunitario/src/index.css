@@ -14,7 +14,7 @@ html, body, #root {
 
 body {
   margin: 0;
-  font-family: Poppins, sans-serif;
+  font-family: Poppins, Arial, sans-serif;
   color: #1E1F1F;
   background: #FFF4E6;
 }
@@ -112,8 +112,8 @@ body {
 /* Field (label + field-box) */
 .field-label {
   display: block;
-  font-size: 13px;
-  color: #000000;
+  font-size: 15px;
+  color: #065535;
   margin: 12px 0 8px;
 }
 
@@ -122,7 +122,7 @@ body {
   align-items: center;
   height: 52px;
   background: #FFFFFF;
-  border: 0.5px solid #000000;
+  border: 1px solid #065535;
   padding: 0 16px;
   margin-bottom: 16px;
   border-radius: 0;
@@ -133,20 +133,20 @@ body {
   width: 100%;
   background: transparent;
   border: none;
-  font-size: 13px;
-  color: #000000;
+  font-size: 14px;
+  color: #065535;
   outline: none;
-  font-family: Poppins, Roboto, Arial, sans-serif;
+  font-family: Poppins, Arial, sans-serif;
 }
 
 .field-box input::placeholder {
-  color: #00000099;
-  font-family: Poppins, Roboto, Arial, sans-serif;
+  color: #41ac21;
+  font-family: Poppins, Arial, sans-serif;
 }
 
 .field-box:has(input:focus),
 .field-box:has(select:focus) {
-  outline: 2px solid #00000099;
+  outline: 2px solid #098553;
   outline-offset: 2px;
 }
 
@@ -155,8 +155,8 @@ body {
   display: block;
   width: 191px;
   height: 70px;
-  margin: 32px auto 0 auto;
-  background: #000000;
+  margin: 80px auto 0;
+  background: #065535;
   color: #FFFFFF;
   border: none;
   font-weight: 700;
@@ -167,7 +167,7 @@ body {
 }
 
 .ok-button:hover {
-  background: #1A1A1A;
+  background: #098553;
 }
 
 .ok-button:disabled,
@@ -177,7 +177,9 @@ body {
 }
 
 /* RoleSelector */
-.role-list { margin-top: 8px; }
+.role-list {
+  margin-top: 8px;
+}
 
 .role-item {
   display: flex;
@@ -185,87 +187,140 @@ body {
   justify-content: space-between;
   height: 56px;
   background: #FFFFFF;
-  border: 0.5px solid #000000;
+  border: 1px solid #065535;
   padding: 0 16px;
   margin-bottom: 16px;
   cursor: pointer;
   user-select: none;
 }
 
-.role-item .label { font-size: 13px; color: #000000; }
-
-.role-item .circle {
-  width: 18px; height: 18px; border-radius: 50%;
-  border: 1px solid #000000; background: transparent; flex: 0 0 18px;
+.role-item .label { 
+  font-size: 14px; 
+  color: #065535;
 }
 
-.role-item.active .circle { background: #000000; border-color: #000000; }
-.role-item:hover { background: #F7F7F7; }
+.role-item .circle {
+  width: 18px; 
+  height: 18px; 
+  border-radius: 50%;
+  border: 1px solid #065535;
+  background: transparent;
+  flex: 0 0 18px;
+}
+
+.role-item.active .circle { 
+  background: #098553;
+  border-color: #098553; 
+}
+
+.role-item:hover { 
+  background: #F7F7F7; 
+}
 
 /* EduSelector */
-
-.edu-list { margin-top: 8px; }
+.edu-list {
+  margin-top: 8px
+ }
 
 .edu-item {
-  display: flex; flex-direction: column; gap: 8px;
-  background: #FFFFFF; border: 0.5px solid #000000;
-  padding: 16px; margin-bottom: 16px;
+  display: flex;
+  flex-direction: column; 
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid #065535;
+  padding: 16px;
+  margin-bottom: 16px;
 }
 
 .edu-item .row {
-  display: flex; align-items: center; justify-content: space-between;
-  min-height: 28px; cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 28px;
+  cursor: pointer;
 }
 
-.edu-item .label { font-size: 13px; color: #000000; }
+.edu-item .label { 
+  font-size: 14px;
+  color: #065535; }
 
 .edu-item .circle {
   width: 18px; height: 18px; border-radius: 50%;
-  border: 1px solid #000000;
+  border: 1px solid #065535;
 }
 
-.edu-item .circle.active { background: #000000; border-color: #000000; }
-.edu-item:hover { background: #F7F7F7; }
+.edu-item .circle.active {
+  background: #098553;
+  border-color: #098553; 
+}
+
+.edu-item:hover { 
+  background: #F7F7F7; 
+}
 
 .year-row {
-  display: none; flex-wrap: wrap; gap: 16px; margin-top: 8px;
+  display: none; 
+  flex-wrap: wrap; 
+  gap: 16px; 
+  margin-top: 8px;
 }
 
-.edu-item.open > .year-row { display: flex; }
+.edu-item.open > .year-row { 
+  display: flex; }
 
 .year-btn {
-  padding: 10px 18px; border-radius: 999px;
-  border: 1px solid #00000059; background: transparent; cursor: pointer;
-  font-size: 14px; color: #000000;
+  padding: 10px 18px; 
+  border-radius: 999px;
+  border: 1px solid #A0DB8E; 
+  background: transparent; 
+  cursor: pointer;
+  font-size: 14px;
+  color: #065535;
 }
 
-.year-btn.active { background: #D9D9D9; color: #000000; border-color: #D9D9D9; }
+.year-btn.active { 
+  background:#A0DB8E; 
+   color: #065535;
+   border-color: #D9D9D9;
+}
 
-.year-btn:focus { outline: 2px solid #00000099; outline-offset: 2px; }
+.year-btn:focus { 
+  outline: 2px solid #098553; 
+  outline-offset: 2px; 
+}
 
 /* UploadCert */
 .inline-hint {
-  margin-left: 12px;
+  margin: 10px 0 0 10px;
   font-size: 13px;
-  color: #00000099;
+  color: #41ac21;
   font-style: italic;
+  display: inline-block;
+}
+
+.hint {
+  margin: 25px 0 0 10px;
+  font-size: 13px;
+  color: #065535;
+  display: inline-block;
 }
 
 .cert-upload {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
 .cert-upload .upload-btn {
-  background: #D9D9D9;
-  padding: 12px 18px;
+  background: #A0DB8E;
+  padding: 10px 16px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  font-size: 13px;
-  color: #000000;
+  font-size: 14px;
+  color: #065535;
+  border: 1px solid #065535; 
 }
 
 /* Barra de Pesquisa */
@@ -292,7 +347,7 @@ body {
   border: none;
   font-size: 14px;
   padding: 0 8px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', Arial, sans-serif;
 }
 
 .search-bar__input::placeholder {
@@ -334,7 +389,7 @@ body {
 .pager__label {
   font-size: 16px;
   color: #000;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', Arial, sans-serif;
 }
 
 /* FilterButton */
@@ -386,7 +441,7 @@ body {
 }
 
 .tutor__card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px #F7F7F7;
   transform: translateY(-2px);
 }
 
@@ -410,7 +465,7 @@ body {
   line-height: 18px;
   color: #000;
   text-align: center;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", Arial, sans-serif;
 }
 
 /* ======= Página: Home ======= */
@@ -454,7 +509,7 @@ body {
   max-width: 1047px;
   padding-inline: 24px;
   color: #000;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', Arial, sans-serif;
   line-height: 1.6;
 }
 
@@ -472,7 +527,7 @@ body {
   text-indent: 0;
   font-weight: 420;
   margin-top: -40px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 .home__introText h2 {
@@ -485,6 +540,7 @@ body {
 }
 
 .home__introText p {
+  margin-top: 40px;
   font-size: 20px;
   font-style: italic;
 }
@@ -550,9 +606,6 @@ body {
 }
 
 /* ===== Página: Login e Register ===== */
-
-.auth-page { background: #FFFFFF; }
-
 .auth-page .auth-form {
   background: transparent;
   padding: 0;
@@ -566,76 +619,83 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 87px 16px 40px;
+  padding: 50px 16px 50px;
 }
 
-.auth-page.register-page .auth-form { width: min(460px, 100%); }
+.auth-page.register-page .auth-form {
+  width: min(460px, 100%);
+}
 
 .auth-page.register-page .auth-form h3 {
   font-size: 40px;
   line-height: 60px;
   font-weight: 400;
   text-align: center;
-  color: #000000;
-  margin-bottom: 8px;
+  color: #065535;
+  margin-bottom: -10px;
 }
 
 .auth-page.register-page .auth-subcta {
   text-align: center;
-  font-size: 16px;
-  color: #00000099;
-  margin-bottom: 20px;
+  font-size: 17px;
+  color: #41ac21;
+  margin-bottom: 30px;
 }
 
-/* CTA links em preto nas duas páginas */
+/* link "entrar" */
 .auth-subcta a {
-  color: #000000;
+  color: #065535;
   text-decoration: underline;
   transition: color .2s ease-in-out;
 }
 
-.auth-subcta a:hover { color: #333333; }
+.auth-subcta a:hover {
+  color: #A0DB8E;
+ }
 
 .auth-page.login-page {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 87px 16px 40px;
+  padding: 50px 16px 40px;
 }
 
-.auth-page.login-page .auth-form { width: min(420px, 100%); }
+.auth-page.login-page .auth-form {
+  width: min(420px, 100%)
+}
 
 .auth-page.login-page h3 {
   font-size: 40px;
   line-height: 60px;
   font-weight: 400;
   text-align: center;
-  color: #000000;
-  margin-bottom: 8px;
+  color: #065535;
+  margin-bottom: -10px;
 }
 
 .auth-page.login-page .auth-subcta {
   text-align: center;
-  font-size: 16px;
-  color: #00000099;
-  margin-bottom: 20px;
+  font-size: 17px;
+  color: #41ac21;
+  margin-bottom: 30px;
 }
 
-/* Mais espaço entre campos do login */
-.auth-page.login-page .field-box { margin-bottom: 24px; }
+.auth-page.login-page .field-box {
+  margin-bottom: 24px;
+}
 
-/* Links estado ativo */
+/* link "registre-se" */
 a:active,
 .nav__link:active,
-.auth-subcta a:active { color: #7A7A7A; }
+.auth-subcta a:active {
+  color: #065535;
+}
 
 /* Auth: responsividade */
-
 @media (max-width: 480px) {
   .auth-page.register-page { padding: 71px 12px 40px; }
   .auth-page.login-page { padding: 71px 12px 40px; }
-
   .ok-button {
     width: 160px;
     height: 60px;
@@ -644,11 +704,9 @@ a:active,
 }
 
 /* ===== Página: Tópicos ===== */
-
 .topics-page {
-  background: #FFFFFF;
   min-height: 100vh;
-  font-family: Poppins, Roboto, Arial, sans-serif;
+  font-family: Poppins, Arial, sans-serif;
 }
 
 .topics-hero {
@@ -682,7 +740,7 @@ a:active,
 }
 
 .topic-card {
-  background: #FFFFFF;
+  background: #ffffff;
   border: 2px solid #000000;
   border-radius: 10px;
   padding: 12px 12px 14px;
@@ -843,3 +901,68 @@ a:active,
   }
 }
 
+/* inbox */
+
+inbox-content {
+  padding: 2rem 4rem;
+}
+
+.titulo {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.lista {
+  border: 1px solid #000;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.5rem;
+  border-bottom: 1px solid #000;
+  background-color: #fff;
+}
+
+.linha:last-child {
+  border-bottom: none;
+}
+
+.linha.cinza {
+  background-color: #d9d9d9;
+}
+
+.icone {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.texto {
+  flex: 1;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-left: 1rem;
+}
+
+.hora {
+  font-size: 0.95rem;
+}
+
+.material-icons {
+  font-size: 20px;
+}
+.inbox-content {
+  padding: 60px 4rem 2rem; 
+}
+.material-icons {
+  font-size: 26px;
+  color: #000; 
+  vertical-align: middle;
+}

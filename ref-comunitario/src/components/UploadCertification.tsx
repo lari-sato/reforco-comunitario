@@ -7,7 +7,7 @@ type Props = {
 
 export function UploadCertification({
   label = "CERTIFICAÇÃO",
-  hint = "*necessário para instruir",
+  hint = "*Necessário para instruir!",
   accept = ".pdf,.png,.jpg,.jpeg",
   onFile,
 }: Props) {

@@ -5,12 +5,12 @@ import { SearchBar } from "../components/SearchBar";
 export function Header() {
   return (
     <header className="header">
-      {/* Logo fixo à esquerda */}
+      {/* Logo à esquerda */}
       <Link to="/topics" className="header__logoLink">
         <img src={logo} alt="Reforço Comunitário" className="header__logo" />
       </Link>
 
-      {/* Search central */}
+      {/* Busca */}
       <div className="header__searchGroup">
         <SearchBar />
       </div>
