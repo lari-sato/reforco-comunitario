@@ -1,4 +1,4 @@
-import Topbar from "./Topbar";
+import { Topbar } from "./Topbar";
 import { Link } from "react-router-dom";
 import { type ReactNode } from "react";
 
@@ -12,7 +12,7 @@ type Props = {
   children: ReactNode;
 };
 
-export default function AuthLayout({
+export function AuthLayout({
   variant, title, ctaText, ctaLinkText, ctaHref, onSubmit, children,
 }: Props) {
   return (

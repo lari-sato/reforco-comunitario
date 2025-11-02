@@ -9,7 +9,7 @@ type Props = {
   onYearChange: (year: string | null) => void;
 };
 
-export default function EduSelector({
+export function EduSelector({
   options, yearsMap, selectedEdu, selectedYear, onEduChange, onYearChange,
 }: Props) {
   const [open, setOpen] = useState<string | null>(null);

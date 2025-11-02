@@ -6,7 +6,7 @@ type Props = {
   labels?: Partial<Record<Role, string>>;
 };
 
-export default function RoleSelector({ selected, onChange, labels }: Props) {
+export function RoleSelector({ selected, onChange, labels }: Props) {
   const items: Role[] = ["aluno", "instrutor"];
   function toggle(role: Role) {
     const has = selected.includes(role);

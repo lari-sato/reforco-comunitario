@@ -7,7 +7,7 @@ type Props = {
   className?: string;
 };
 
-export default function Field({ label, htmlFor, children, className }: Props) {
+export function Field({ label, htmlFor, children, className }: Props) {
   return (
     <div className={className}>
       <label className="field-label" htmlFor={htmlFor}>{label}</label>

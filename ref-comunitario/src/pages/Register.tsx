@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthLayout from "../components/AuthLayout";
-import Field from "../components/Field";
-import RoleSelector, { type Role } from "../components/RoleSelector";
-import EduSelector from "../components/EduSelector";
+import { AuthLayout } from "../components/AuthLayout";
+import { Field } from "../components/Field";
+import { RoleSelector, type Role } from "../components/RoleSelector";
+import { EduSelector } from "../components/EduSelector";
 import { UploadCertification } from "../components/UploadCertification";
-import OkButton from "../components/OkButton";
+import { OkButton } from "../components/OkButton";
 import { apiPost, apiPostForm } from "../lib/api";
 
 const ESC_ALUNO = [
@@ -32,7 +32,7 @@ const ANOS_ESC: Record<string, string[]> = {
   "Superior Completo": [],
 };
 
-export default function Register() {
+export function Register() {
   const navigate = useNavigate();
 
   const [user, setUser] = useState("");

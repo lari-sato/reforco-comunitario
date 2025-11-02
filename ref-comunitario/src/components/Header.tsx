@@ -5,30 +5,25 @@ import { SearchBar } from "../components/SearchBar";
 export function Header() {
   return (
     <header className="header">
-      <div className="home__topbar">
-        <div className="header__inner container">
-          <div className="header__left">
-            <Link to="/" className="header__logoLink">
-              <img
-                src={logo}
-                alt="Reforço Comunitário"
-                className="header__logo"
-              />
-            </Link>
+      {/* Logo fixo à esquerda */}
+      <Link to="/topics" className="header__logoLink">
+        <img src={logo} alt="Reforço Comunitário" className="header__logo" />
+      </Link>
 
-            <SearchBar />
-          </div>
-
-          <nav className="header__nav">
-            <NavLink to="/inbox" className="nav__link">
-              Inbox
-            </NavLink>
-            <NavLink to="/profile" className="nav__link">
-              Profile
-            </NavLink>
-          </nav>
-        </div>
+      {/* Search central */}
+      <div className="header__searchGroup">
+        <SearchBar />
       </div>
+
+      {/* Ícones à direita */}
+      <nav className="header__nav">
+        <NavLink to="/inbox" className="nav__icon">
+          <img src="/icons/inbox.svg" alt="Inbox" className="header__icon" />
+        </NavLink>
+        <NavLink to="/profile" className="nav__icon">
+          <img src="/icons/profile.svg" alt="Profile" className="header__icon" />
+        </NavLink>
+      </nav>
     </header>
   );
 }

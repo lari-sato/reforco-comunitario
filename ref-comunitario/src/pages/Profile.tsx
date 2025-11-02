@@ -1,4 +1,3 @@
-// src/pages/Profile.tsx
 import { useEffect, useState } from "react";
 import { apiGet } from "../lib/api";
 import type { Usuario } from "../types";
