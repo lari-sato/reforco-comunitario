@@ -495,10 +495,15 @@ a:active,
 .inbox-content {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centraliza verticalmente */
-  min-height: 100vh; /* ocupa a altura total da tela */
-  align-items: center; /* mantém centralização horizontal */
-  padding: 0 2rem; /* padding lateral se quiser */
+  /* Removemos 'justify-content: center' 
+    pois ele centraliza verticalmente (no meio da tela) 
+    e conflita com o seu 'padding-top: 60px'.
+  */
+  min-height: 100vh; /* Garante que o layout ocupe a altura toda */
+  align-items: center; /* Centraliza o .titulo e o .lista horizontalmente */
+  
+  /* Este é o padding que você definiu na segunda regra e que será usado: */
+  padding: 60px 4rem 2rem; 
 }
 
 .titulo {
