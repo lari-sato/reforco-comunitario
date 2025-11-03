@@ -1,4 +1,6 @@
 import logo from "../assets/logo/logo.png";
+import inbox from "../assets/icons/inbox.svg";
+import profile from "../assets/icons/profile.svg";
 import { NavLink, Link } from "react-router-dom";
 import { SearchBar } from "../components/SearchBar";
 
@@ -18,10 +20,10 @@ export function Header() {
       {/* Ícones à direita */}
       <nav className="header__nav">
         <NavLink to="/inbox" className="nav__icon">
-          <img src="/icons/inbox.svg" alt="Inbox" className="header__icon" />
+          <img src={inbox} alt="Inbox" className="header__icon" />
         </NavLink>
         <NavLink to="/profile" className="nav__icon">
-          <img src="/icons/profile.svg" alt="Profile" className="header__icon" />
+          <img src={profile} alt="Profile" className="header__icon" />
         </NavLink>
       </nav>
     </header>

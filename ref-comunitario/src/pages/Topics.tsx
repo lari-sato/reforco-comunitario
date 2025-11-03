@@ -64,7 +64,7 @@ export function Topics() {
   return (
     <main className="topics-page">
       <section className="topics-hero">
-        <h1>Bem-Vindo(a)!</h1>
+        <h1>Bem-vindo(a)!</h1>
         <p>Selecione pelo menos um tópico para começar.</p>
       </section>
 
@@ -80,7 +80,7 @@ export function Topics() {
               onClick={() => alternarMaterias(t.nome)}
               style={{
                 outline: selected.includes(t.nome) 
-                ? "3px solid #000" 
+                ? "3px solid #065535" 
                 : "none",
                 cursor: "pointer",
               }}

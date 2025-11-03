@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import type { Instrutor } from "../types";
-import { FilterButton } from "../components/FilterButton";
 import { PagerButtons } from "../components/PagerButtons";
 import { TutorCard } from "../components/TutorCard";
 
@@ -34,14 +33,12 @@ export function Tutors() {
 
   return (
     <main className="tutors">
+      <section className="tutors-hero">
+        <h1>Boa!</h1>
+        <p>Agora, clique em um tutor para expandir seu perfil.</p>
+      </section>
+
       <div className="tutors__container">
-        <p className="tutors__hint">Clique em um tutor para expandir seu perfil.</p>
-
-        <div className="tutors__bar">
-          <h2 className="tutors__title">Tutores</h2>
-          <FilterButton />
-        </div>
-
         <section className="tutors__grid">
           {data.map((t) => (
             <TutorCard key={t.id} nome={t.nome} />
