@@ -1,10 +1,11 @@
 package back.api.service;
 
 
+import back.api.model.dto.UsuarioDTO;
 import back.api.model.entity.SolicitacaoVideoaula;
-import back.api.model.entity.Usuario;
 import back.api.repository.SolicitacaoRepository;
 import back.api.repository.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,11 @@ public class UsuarioService {
     @Autowired
     private SolicitacaoRepository solicitacaoRepository;
 
-    public Usuario verPerfil(Long id) {
-        // Função gerada automaticamente pelo Spring
-        return usuarioRepository.findById(id).orElse(null);
+    public UsuarioDTO verPerfil(Long id) {
+        UsuarioDTO usuario = UsuarioDTO.fromEntity(usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Instrutor com ID " + id + " não encontrado!")));
+
+        return usuario;
     }
 
     public List<SolicitacaoVideoaula> solicitacoes(Long id) {
