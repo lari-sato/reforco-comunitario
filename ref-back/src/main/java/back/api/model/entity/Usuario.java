@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.math.BigDecimal;
 
 
 @Entity
@@ -38,10 +39,13 @@ public class Usuario {
     private EscolaridadeEnum escolaridade;
 
     @Column(name = "avaliacao_media", precision = 3, scale = 2)
-    private String avaliacao;
+    private BigDecimal avaliacao;
 
     @Column(name = "caminho_certificado", length = 255)
     private String certificado;
+
+    @Column(name = "foto_perfil_url", length = 255)
+    private String fotoPerfilUrl;
 
     // Apenas para usuários que são INSTRUTOR ou AMBOS
     @ManyToMany(fetch = FetchType.LAZY)
