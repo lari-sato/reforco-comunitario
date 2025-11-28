@@ -1,38 +1,18 @@
-/* A integração com o back-end está comentada. Terminaremos de implementar
-essa página quando a API de tópicos estiver pronta. */
-
-import { useState } from "react";
-//import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import { getTopicos } from "../lib/topics";
+import { getTopicos } from "../lib/topics";
 import type { Topico } from "../types";
-
-  // Mock de matérias 
-  const MOCK_TOPICOS: Topico[] = [
-    { id: 1, nome: "Matemática" },
-    { id: 2, nome: "Português" },
-    { id: 3, nome: "Inglês" },
-    { id: 4, nome: "Física" },
-    { id: 5, nome: "Química" },
-    { id: 6, nome: "Biologia" },
-    { id: 7, nome: "História" },
-    { id: 8, nome: "Geografia" },
-    { id: 9, nome: "Redação" },
-    { id: 10, nome: "Programação" },
-    { id: 11, nome: "Artes" },
-    { id: 12, nome: "Educação Financeira" },
-  ];
 
 export function Topics() {
   const navigate = useNavigate();
-  const [topicos] = useState<Topico[]>(MOCK_TOPICOS);
-  //const [topicos, setTopicos] = useState<Topico[]>([]);
-  //const [loading, setLoading] = useState(false);
-  //const [err, setErr] = useState<string | null>(null);
+  const [topicos, setTopicos] = useState<Topico[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     let alive = true;
+
     (async () => {
       try {
         setErr(null);
@@ -45,8 +25,11 @@ export function Topics() {
         if (alive) setLoading(false);
       }
     })();
-    return () => { alive = false; };
-  }, []); */
+
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   function alternarMaterias(nome: string) {
     setSelected((prev) =>
@@ -69,8 +52,8 @@ export function Topics() {
       </section>
 
       <div className="container" style={{ maxWidth: 876, paddingInline: 16 }}>
-        {/*loading && <p>Carregando…</p>}
-        {err && <p>{err}</p>*/}
+        {loading && <p>Carregando…</p>}
+        {err && <p>{err}</p>}
 
         <section className="topics-grid">
           {topicos.map((t) => (
@@ -79,9 +62,9 @@ export function Topics() {
               className="topic-card"
               onClick={() => alternarMaterias(t.nome)}
               style={{
-                outline: selected.includes(t.nome) 
-                ? "3px solid #065535" 
-                : "none",
+                outline: selected.includes(t.nome)
+                  ? "3px solid #065535"
+                  : "none",
                 cursor: "pointer",
               }}
               aria-pressed={selected.includes(t.nome)}

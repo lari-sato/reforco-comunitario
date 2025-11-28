@@ -1,7 +1,13 @@
 import { apiGet } from "./api";
 import type { Instrutor } from "../types";
 
-// GET /api/instrutores/busca?materias=A&materias=B -> List<Instrutor>
+// Consulta instrutores por uma ou mais matérias
 export async function buscarInstrutoresPorMaterias(materias: string[]): Promise<Instrutor[]> {
-  return apiGet<Instrutor[]>("/api/instrutores/busca", { materias });
+  if (materias.length === 0) return [];
+
+  // monta query: /api/instrutores/busca?materias=A&materias=B
+  const params = new URLSearchParams();
+  materias.forEach(m => params.append("materias", m));
+
+  return apiGet<Instrutor[]>(`/api/instrutores/busca?${params.toString()}`);
 }

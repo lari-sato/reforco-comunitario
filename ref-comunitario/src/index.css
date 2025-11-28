@@ -476,6 +476,47 @@ body {
   font-family: "Poppins", Arial, sans-serif;
 }
 
+/* Botão Voltar */
+.btn-voltar {
+  width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background: #065535;
+  font-size: 22px;
+  color: #ffffff;
+  font-family: poppins, sans-serif;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn-voltar:hover {
+  background: #098553;
+}
+
+/* Botão de solicitar ajuda */
+.btn-help {
+  width: 395px;        
+  height: 71px;
+
+  background: #065535; 
+  border: none;
+  border-radius: 10px;
+
+  font-family: Poppins, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 35px;      
+  line-height: 54px;
+  color: #ffffff;
+
+  text-align: center;
+  cursor: pointer;
+  transition: background .15s ease-in-out;
+}
+.btn-help:hover {
+  background: #098553;
+}
+
 /* ======= Página: Home ======= */
 
 .home {
@@ -890,25 +931,10 @@ a:active,
 
 .tutors__footer {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 40px;
-}
-
-.btn-voltar {
-  width: 120px;
-  height: 40px;
-  border-radius: 10px;
-  border: none;
-  background: #065535 ;
-  font-size: 22px;
-  color: #ffffff;
-  font-family: poppins, sans-serif;
-  cursor: pointer;
-  transition: background 0.2s ease-in-out;
-}
-
-.btn-voltar:hover {
-  background: #098553;
+  padding: 0 4px;
 }
 
 /* Tutores: responsividade */
@@ -1047,3 +1073,78 @@ a:active,
   outline: 2px solid #065535;
   outline-offset: 2px;
 }
+
+/* Inbox: responsividade */
+@media (max-width: 600px) {
+  .title {
+    font-size: 28px;
+    margin: 20px 0 20px 0;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .time {
+    align-self: flex-end;
+    font-size: 13px;
+  }
+}
+
+/* ===== Página: Formulário de Aula ===== */
+
+/* ===== Página: Perfil ===== */
+
+/* Página: Chamda de Vídeo ===== */
+.vc {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 16px 24px;
+  font-family: Poppins, Arial, sans-serif;
+}
+.vc__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 0 16px;
+}
+.vc__actions { display: flex; gap: 8px; }
+.btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #065535;
+  background: #fff;
+  color: #065535;
+  cursor: pointer;
+}
+.btn--primary { background: #065535; color: #fff; }
+.btn--danger  { background: #c62828; color: #fff; border-color: #c62828; }
+
+.vc__error { color: #c62828; margin: 8px 0; }
+
+.vc__videos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.vc__video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #111;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.vc__video--self { outline: 2px solid #41ac21; }
+.vc__video--remote { outline: 2px solid #065535; }
+
+.vc__status {
+  margin-top: 10px;
+  display: flex;
+  gap: 16px;
+  color: #333;
+  font-size: 14px;
+}
+.vc__ws { opacity: 0.7; }

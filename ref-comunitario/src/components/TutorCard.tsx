@@ -1,20 +1,18 @@
-import { useState } from "react";
 import user from "../assets/icons/user.svg";
 
-export function TutorCard({ nome }: { nome: string }) {
-  const [selected, setSelected] = useState(false);
+interface TutorCardProps {
+  nome: string;
+  onClick?: () => void;
+}
 
-  function onToggle() {
-    setSelected((v) => !v);
-  }
-
+export function TutorCard({ nome, onClick }: TutorCardProps) {
   return (
     <figure className="tutor">
       <button
         type="button"
-        className={`tutor__card${selected ? " is-selected" : ""}`}
-        onClick={onToggle}
-        aria-pressed={selected}
+        className="tutor__card"
+        onClick={onClick}
+        aria-label={`Abrir perfil de ${nome}`}
       >
         <img src={user} alt={`Foto de ${nome}`} className="tutor__avatar" />
       </button>
