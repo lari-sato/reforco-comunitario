@@ -1,6 +1,6 @@
-package back.api.configuration;
+package back.videochamada.configuration;
 
-import back.api.component.SocketHandler;
+import back.videochamada.component.SocketHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
