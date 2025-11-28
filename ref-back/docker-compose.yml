@@ -1,23 +1,27 @@
-
 services:
-  # Serviço do Backend
   backend:
-    build: . # Constrói o Dockerfile
+    build: .
     container_name: reforco-comitente-app
     ports:
       - "8080:8080"
     environment:
-      # Configuração do Spring Boot
       SPRING_DATASOURCE_URL: jdbc:mariadb://database:3306/reforco_comunitario
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD} # Puxa a senha do arquivo .env
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-
-    # Garante que o database inicia antes do backend
+      # Variável para dizer ao Java onde salvar os arquivos dentro do container
+      FILE_UPLOAD_DIR: /app/uploads 
+      # URL base para o frontend acessar as imagens
+      API_BASE_URL: http://localhost:8080 
+    
     depends_on:
-      - database 
+      database:
+        condition: service_healthy
+    
+    volumes:
+      # Mapeia a pasta 'uploads' para '/app/uploads' no container
+      - ./uploads:/app/uploads 
 
-  # Serviço do Banco de Dados (MariaDB)
   database:
     image: mariadb:lts
     container_name: reforco-comunitario-db
@@ -25,9 +29,15 @@ services:
       - "3306:3306"
     environment:
       MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
-      MARIADB_DATABASE: reforco_comunitario # Cria o banco de dados
+      MARIADB_DATABASE: reforco_comunitario
     volumes:
       - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 volumes:
   db-data:
