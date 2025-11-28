@@ -25,11 +25,11 @@ public record UsuarioDTO(Long id,
 
     public Usuario toEntity() {
         Usuario usuario = new Usuario();
-        usuario.setId(this.id());
         usuario.setNome(this.nome());
         usuario.setEmail(this.email());
         usuario.setSenha(this.senha());
         return usuario;
     }
+
 
 }
