@@ -3,7 +3,6 @@ package back.api.controller;
 import back.api.model.AuthRequest;
 import back.api.model.AuthResponse;
 import back.api.model.dto.UsuarioDTO;
-import back.api.model.entity.Usuario;
 import back.api.service.RegistroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
 
 @RestController
 @Tag(name = "Registro")
