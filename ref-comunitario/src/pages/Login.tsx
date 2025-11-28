@@ -1,36 +1,56 @@
-import { type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthLayout } from "../components/AuthLayout";
+import { Field } from "../components/Field";
+import { OkButton } from "../components/OkButton";
+import { apiPost } from "../lib/api";
 
-export default function Login() {
+export function Login() {
   const navigate = useNavigate();
-  function handleSubmit(e: FormEvent) {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const disabled = !email.trim() || !senha.trim();
+
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    navigate("/topics"); 
-    // lógica de autenticação 
+    if (disabled) return;
+    await apiPost("/api/registro/login", { email, senha });
+    navigate("/topics");
   }
 
   return (
-    <div className="auth-page login-page">
-      <div className="topbar" />
+    <AuthLayout
+      variant="login"
+      title="Entre agora!"
+      ctaText="Não possui conta?"
+      ctaLinkText="Registre-se"
+      ctaHref="/register"
+      onSubmit={handleSubmit}
+    >
+      <Field label="E-MAIL" htmlFor="login-email">
+        <input
+          id="login-email"
+          type="email"
+          placeholder="voce@exemplo.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </Field>
 
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <h3>Entre agora!</h3>
-        <p className="auth-subcta">
-          Não possui conta? <Link to="/register">Registre-se</Link>
-        </p>
+      <Field label="SENHA" htmlFor="login-pass">
+        <input
+          id="login-pass"
+          type="password"
+          placeholder="Digite sua senha..."
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          required
+        />
+      </Field>
 
-        <label className="field-label">E-mail</label>
-        <div className="field-box">
-          <input type="email" placeholder="voce@exemplo.com" required />
-        </div>
-
-        <label className="field-label">Senha</label>
-        <div className="field-box">
-          <input type="password" placeholder="Digite sua senha" required />
-        </div>
-
-        <button type="submit" className="ok-button">OK</button>
-      </form>
-    </div>
+      <OkButton disabled={disabled} aria-disabled={disabled}>OK</OkButton>
+    </AuthLayout>
   );
 }

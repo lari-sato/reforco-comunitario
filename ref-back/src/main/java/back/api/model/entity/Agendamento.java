@@ -19,12 +19,12 @@ public class Agendamento {
     private Long id_agendamento;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_aluno", referencedColumnName = "id_usuario", insertable = true, updatable = true)
+    @JoinColumn(name = "id_aluno", referencedColumnName = "id_usuario")
     @Where(clause = "tipo_usuario = 'ALUNO'")
     private Usuario aluno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_instrutor", referencedColumnName = "id_usuario", insertable = false, updatable = false)
+    @JoinColumn(name = "id_instrutor", referencedColumnName = "id_usuario")
     @Where(clause = "tipo_usuario = 'INSTRUTOR'")
     private Usuario instrutor;
 

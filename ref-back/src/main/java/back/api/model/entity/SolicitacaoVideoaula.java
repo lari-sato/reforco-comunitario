@@ -20,13 +20,13 @@ public class SolicitacaoVideoaula {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_aluno", referencedColumnName = "id_usuario", insertable = true, updatable = true)
-    @Where(clause = "tipo_usuario = 'ALUNO'")
+    @JoinColumn(name = "id_aluno", referencedColumnName = "id_usuario")
+    @Where(clause = "tipo_usuario = 'ALUNO' OR tipo_usuario = 'AMBOS'")
     private Usuario aluno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_instrutor", referencedColumnName = "id_usuario", insertable = false, updatable = false)
-    @Where(clause = "tipo_usuario = 'INSTRUTOR'")
+    @JoinColumn(name = "id_instrutor", referencedColumnName = "id_usuario")
+    @Where(clause = "tipo_usuario = 'INSTRUTOR' OR tipo_usuario = 'AMBOS'")
     private Usuario instrutor;
 
     @ManyToOne(fetch = FetchType.LAZY)

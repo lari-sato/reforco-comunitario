@@ -1,37 +1,31 @@
-import logo from '../assets/logo/logo.png';
+import logo from "../assets/logo/logo.png";
+import inbox from "../assets/icons/inbox.svg";
+import profile from "../assets/icons/profile.svg";
 import { NavLink, Link } from "react-router-dom";
-import { useState } from 'react';
+import { SearchBar } from "../components/SearchBar";
 
-export const Header = () => {
-  const [query, setQuery] = useState('');
-
+export function Header() {
   return (
     <header className="header">
-      <div className="home__topbar">
-        <div className="header__inner container">
-          <div className="header__left">
-            <Link to="/topics" className="header__logoLink">
-              <img src={logo} alt="Reforço Comunitário" className="header__logo" />
-            </Link>
+      {/* Logo à esquerda */}
+      <Link to="/topics" className="header__logoLink">
+        <img src={logo} alt="Reforço Comunitário" className="header__logo" />
+      </Link>
 
-            {/* Barra de Busca */}
-            <div className="nav__search">
-              <input
-                type="search"
-                placeholder="Pesquise aqui..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="search-input"
-              />
-            </div>
-          </div>
-
-          <nav className="header__nav">
-            <NavLink to="/inbox" className="nav__link">Inbox</NavLink>
-            <NavLink to="/profile" className="nav__link">Profile</NavLink>
-          </nav>
-        </div>
+      {/* Busca */}
+      <div className="header__searchGroup">
+        <SearchBar />
       </div>
+
+      {/* Ícones à direita */}
+      <nav className="header__nav">
+        <NavLink to="/inbox" className="nav__icon">
+          <img src={inbox} alt="Inbox" className="header__icon" />
+        </NavLink>
+        <NavLink to="/profile" className="nav__icon">
+          <img src={profile} alt="Profile" className="header__icon" />
+        </NavLink>
+      </nav>
     </header>
-  )
+  );
 }
