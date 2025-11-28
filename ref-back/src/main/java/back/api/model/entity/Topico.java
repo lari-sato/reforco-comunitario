@@ -20,6 +20,9 @@ public class Topico {
     @Column(name = "nome", unique = true, nullable = false, length = 100)
     private String nome;
 
+    @Column(name = "image_url", length = 255)
+    private String imageUrl;
+
     @ManyToMany(mappedBy = "topicosEspecialidade", fetch =
             FetchType.LAZY)
     private Set<Usuario> instrutores = new HashSet<>();

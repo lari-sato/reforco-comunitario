@@ -1,12 +1,17 @@
 package back.api.controller;
 
-import back.api.model.entity.Usuario;
+import back.api.model.AuthRequest;
+import back.api.model.AuthResponse;
+import back.api.model.dto.UsuarioDTO;
 import back.api.service.RegistroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @Tag(name = "Registro")
@@ -30,9 +35,9 @@ public class RegistroController {
                     )
             }
     )
-    @GetMapping("/login")
-    public Usuario login(@RequestParam String email, String senha) {
-        return registroService.login(email, senha);
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
+        return ResponseEntity.ok(registroService.login(authRequest.email(), authRequest.senha()));
     }
 
     @Operation(
@@ -50,7 +55,7 @@ public class RegistroController {
             }
     )
     @PostMapping("/cadastro")
-    public boolean cadastro(@RequestBody Usuario usuario) {
-        return registroService.cadastro(usuario);
+    public ResponseEntity<UsuarioDTO> cadastro(@RequestBody @Valid UsuarioDTO usuario) {
+        return ResponseEntity.ok(registroService.cadastro(usuario));
     }
 }

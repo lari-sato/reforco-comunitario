@@ -1,7 +1,7 @@
 package back.api.controller;
 
+import back.api.model.dto.UsuarioDTO;
 import back.api.model.entity.SolicitacaoVideoaula;
-import back.api.model.entity.Usuario;
 import  back.api.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -34,7 +34,7 @@ public class UsuarioController {
             }
     )
     @GetMapping("/perfil")
-    public Usuario verPerfil(@RequestParam Long id) {
+    public UsuarioDTO verPerfil(@RequestParam Long id) {
         return usuarioService.verPerfil(id);
     }
 

@@ -1,6 +1,6 @@
 package back.api.controller;
 
-import back.api.model.entity.Usuario;
+import back.api.model.dto.UsuarioDTO;
 import back.api.service.InstrutorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,7 +33,7 @@ public class InstrutorController {
         }
     )
     @GetMapping("/busca")
-    public List<Usuario> buscarPorMateria(@RequestParam List<String> materias) {
+    public List<UsuarioDTO> buscarPorMateria(@RequestParam List<String> materias) {
         return instrutorService.buscarPorMateria(materias);
     }
 
@@ -52,7 +52,7 @@ public class InstrutorController {
             }
     )
     @GetMapping("/perfil_instrutor")
-    public Usuario perfilInstrutor(@RequestParam Long id) {
+    public UsuarioDTO perfilInstrutor(@RequestParam Long id) {
         return instrutorService.perfilInstrutor(id);
     }
 }

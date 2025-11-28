@@ -18,12 +18,17 @@ public class Avaliacao {
     private Long id_avaliacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_isntrutor", referencedColumnName = "id_usuario", nullable = false)
-    @Where(clause = "tipo_usuario = 'INSTRUTOR'")
+    @JoinColumn(name = "id_instrutor", referencedColumnName = "id_usuario", nullable = false)
+    @Where(clause = "tipo_usuario = 'INSTRUTOR' OR tipo_usuario = 'AMBOS'")
     private Usuario instrutor;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_topico", nullable = false)
+    @JoinColumn(name = "id_aluno", referencedColumnName = "id_usuario", nullable = false)
+    @Where(clause = "tipo_usuario = 'ALUNO' OR tipo_usuario = 'AMBOS'")
+    private Usuario aluno;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_topico")
     private Topico topico;
 
     @Column(name = "nota", nullable = false)
