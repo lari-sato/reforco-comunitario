@@ -8,6 +8,7 @@ import { UploadCertification } from "../components/UploadCertification";
 import { OkButton } from "../components/OkButton";
 import { apiPost, apiPostForm } from "../lib/api";
 
+// Rótulos exibidos na UI
 const ESC_ALUNO = [
   "Ensino Fundamental Incompleto",
   "Ensino Fundamental Completo",
@@ -23,6 +24,7 @@ const ESC_INST = [
   "Superior Completo",
 ] as const;
 
+// Mapa de anos por escolaridade (para o seletor de série/ano)
 const ANOS_ESC: Record<string, string[]> = {
   "Ensino Fundamental Incompleto": ["6º", "7º", "8º", "9º"],
   "Ensino Fundamental Completo": [],
@@ -31,6 +33,39 @@ const ANOS_ESC: Record<string, string[]> = {
   "Superior Incompleto": [],
   "Superior Completo": [],
 };
+
+// Mapeia as roles da UI para o enum TipoEnum do back-end
+function mapRolesToTipo(roles: Role[]): "Aluno" | "Instrutor" | "Ambos" {
+  const hasAluno = roles.includes("aluno");
+  const hasInstrutor = roles.includes("instrutor");
+
+  if (hasAluno && hasInstrutor) return "Ambos";
+  if (hasAluno) return "Aluno";
+  if (hasInstrutor) return "Instrutor";
+
+  // Não deveria acontecer porque o botão é desabilitado sem role
+  throw new Error("Nenhuma função selecionada");
+}
+
+// Mapeia o texto exibido para o enum EscolaridadeEnum do back-end
+function mapEscolaridadeToEnum(value: string | null): string | null {
+  switch (value) {
+    case "Ensino Fundamental Incompleto":
+      return "FundInc";
+    case "Ensino Fundamental Completo":
+      return "FundComp";
+    case "Ensino Médio Incompleto":
+      return "MedioInc";
+    case "Ensino Médio Completo":
+      return "MedioComp";
+    case "Superior Incompleto":
+      return "SupInc";
+    case "Superior Completo":
+      return "SupComp";
+    default:
+      return null;
+  }
+}
 
 export function Register() {
   const navigate = useNavigate();
@@ -42,23 +77,21 @@ export function Register() {
   const [roles, setRoles] = useState<Role[]>([]);
   const [selectedEdu, setSelectedEdu] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
-
   const [certFile, setCertFile] = useState<File | null>(null);
 
   const hasAluno = roles.includes("aluno");
   const hasInstrutor = roles.includes("instrutor");
-  const bothRoles = hasAluno && hasInstrutor;
-  const instructorOnly = hasInstrutor && !hasAluno;
 
+  // Opções de escolaridade variam conforme o papel selecionado
   const ESC_FILTRO = useMemo(() => {
-    if (bothRoles) {
-      const i = ESC_ALUNO.findIndex((e) => e === "Ensino Fundamental Completo");
-      return ESC_ALUNO.slice(i);
+    if (hasAluno && hasInstrutor) {
+      return Array.from(new Set([...ESC_ALUNO, ...ESC_INST]));
     }
-    if (instructorOnly) return [...ESC_INST];
+    if (hasInstrutor) return [...ESC_INST];
     return [...ESC_ALUNO];
-  }, [bothRoles, instructorOnly]);
+  }, [hasAluno, hasInstrutor]);
 
+  // Se o usuário trocar os papéis e a escolaridade atual deixar de ser válida, limpamos
   useEffect(() => {
     if (selectedEdu && !ESC_FILTRO.includes(selectedEdu as any)) {
       setSelectedEdu(null);
@@ -75,33 +108,49 @@ export function Register() {
   const certOk = needsCert ? certFile !== null : true;
 
   const allOk =
-    user.trim() && emailOk && pass.trim() && hasRole && !!selectedEdu && yearOk && certOk;
+    user.trim().length > 0 &&
+    emailOk &&
+    pass.trim().length > 0 &&
+    hasRole &&
+    !!selectedEdu &&
+    yearOk &&
+    certOk;
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!allOk) return;
 
     try {
+      const tipo = mapRolesToTipo(roles);
+      const escolaridadeEnum = mapEscolaridadeToEnum(selectedEdu);
+
+      if (!escolaridadeEnum) {
+        throw new Error("Escolaridade inválida");
+      }
+
+      // Corpo base esperado pelo back-end (UsuarioDTO)
+      const basePayload = {
+        nome: user,
+        email,
+        senha: pass,
+        tipo,
+        escolaridade: escolaridadeEnum,
+        ano: selectedYear, // campo extra só utilizado pelo front; o back pode ignorar
+      };
+
       if (certFile) {
         const form = new FormData();
-        form.append("usuario", user);
-        form.append("email", email);
-        form.append("senha", pass);
-        form.append("roles", JSON.stringify(roles));
-        form.append("escolaridade", selectedEdu || "");
-        form.append("ano", selectedYear || "");
-        form.append("certificacao", certFile, certFile.name);
+        Object.entries(basePayload).forEach(([key, value]) => {
+          if (value != null) {
+            form.append(key, String(value));
+          }
+        });
+        form.append("certFile", certFile, certFile.name);
         await apiPostForm("/api/registro/cadastro", form);
       } else {
-        await apiPost("/api/registro/cadastro", {
-          usuario: user,
-          email,
-          senha: pass,
-          roles,
-          escolaridade: selectedEdu,
-          ano: selectedYear,
-        });
+        await apiPost("/api/registro/cadastro", basePayload);
       }
+
       navigate("/topics");
     } catch (err) {
       console.error(err);
@@ -112,8 +161,8 @@ export function Register() {
   return (
     <AuthLayout
       variant="register"
-      title="Registre-se já!"
-      ctaText="Já possui uma conta?"
+      title="Crie sua conta"
+      ctaText="Já tem uma conta?"
       ctaLinkText="Entrar"
       ctaHref="/login"
       onSubmit={handleSubmit}
@@ -132,7 +181,7 @@ export function Register() {
         <input
           id="reg-email"
           type="email"
-          placeholder="nome@gmail.com"
+          placeholder="email@exemplo.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -143,7 +192,7 @@ export function Register() {
         <input
           id="reg-pass"
           type="password"
-          placeholder="Use uma senha forte!"
+          placeholder="Digite sua senha..."
           value={pass}
           onChange={(e) => setPass(e.target.value)}
           required
@@ -165,7 +214,9 @@ export function Register() {
 
       {hasInstrutor && <UploadCertification onFile={setCertFile} />}
 
-      <OkButton disabled={!allOk} aria-disabled={!allOk}>OK</OkButton>
+      <OkButton disabled={!allOk} aria-disabled={!allOk}>
+        OK
+      </OkButton>
     </AuthLayout>
   );
 }

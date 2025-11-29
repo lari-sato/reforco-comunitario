@@ -5,6 +5,12 @@ import { Field } from "../components/Field";
 import { OkButton } from "../components/OkButton";
 import { apiPost } from "../lib/api";
 
+type AuthResponse = {
+  autenticado: boolean;
+  id: number;
+  nome: string;
+};
+
 export function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -15,16 +21,30 @@ export function Login() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (disabled) return;
-    await apiPost("/api/registro/login", { email, senha });
-    navigate("/topics");
+
+    try {
+      const resp = await apiPost<AuthResponse>("/api/registro/login", { email, senha });
+
+      if (!resp.autenticado) {
+        alert("Usuário ou senha inválidos.");
+        return;
+      }
+
+      // Aqui poderíamos guardar o usuário em algum estado global / storage.
+      // Por enquanto, apenas seguimos para a tela de tópicos.
+      navigate("/topics");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao realizar login.");
+    }
   }
 
   return (
     <AuthLayout
       variant="login"
-      title="Entre agora!"
-      ctaText="Não possui conta?"
-      ctaLinkText="Registre-se"
+      title="Bem-vindo(a) de volta"
+      ctaText="Ainda não tem conta?"
+      ctaLinkText="Cadastrar"
       ctaHref="/register"
       onSubmit={handleSubmit}
     >
@@ -32,7 +52,7 @@ export function Login() {
         <input
           id="login-email"
           type="email"
-          placeholder="voce@exemplo.com"
+          placeholder="email@exemplo.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -50,7 +70,9 @@ export function Login() {
         />
       </Field>
 
-      <OkButton disabled={disabled} aria-disabled={disabled}>OK</OkButton>
+      <OkButton disabled={disabled} aria-disabled={disabled}>
+        OK
+      </OkButton>
     </AuthLayout>
   );
 }
