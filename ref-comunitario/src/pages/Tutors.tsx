@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Instrutor } from "../types";
-import { PagerButtons } from "../components/PagerButtons";
 import { TutorCard } from "../components/TutorCard";
 import { BackButton } from "../components/BackButton";
 import { HelpButton } from "../components/HelpButton";
