@@ -20,6 +20,26 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @Operation(
+            summary = "Editar dados do usuário",
+            description = "Atualiza dados do usuário",
+            responses = {
+                    @ApiResponse(
+                            description = "Sucesso",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Erro interno",
+                            responseCode = "500"
+                    )
+            }
+    )
+    @PutMapping("/editar")
+    public UsuarioDTO editarUsuario(@RequestParam Long id,
+                                    @RequestBody UsuarioDTO dadosAtualizados) {
+        return usuarioService.editarUsuario(id, dadosAtualizados);
+    }
+
+    @Operation(
             summary = "Ver perfil de usuário",
             description = "Retorna dados do perfil do usuário",
             responses = {
