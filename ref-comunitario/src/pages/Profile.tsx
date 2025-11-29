@@ -252,8 +252,7 @@ export function Profile() {
 
           <div className="profile-actions">
             <button
-              type="button"
-              className="primary-button"
+              className="btn-edit-profile"
               onClick={handleToggleEdit}
               disabled={saving}
             >
