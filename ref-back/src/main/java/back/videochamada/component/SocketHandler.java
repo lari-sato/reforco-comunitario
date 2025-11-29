@@ -1,4 +1,4 @@
-package back.api.component;
+package back.videochamada.component;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
