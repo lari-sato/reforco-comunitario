@@ -38,9 +38,9 @@ export function Home() {
         </p>
     
         <div className="home__actions">
-          <a className="btn" href="/login">Entrar</a>
+          <a className="btn-ec" href="/login">Entrar</a>
           <div className="home__divider">OU</div>
-          <a className="btn" href="/register">Cadastrar</a>
+          <a className="btn-ec" href="/register">Cadastrar</a>
         </div>
 
       </section>
