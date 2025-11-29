@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function ClassForm() {
+  const navigate = useNavigate();
+
   const [helpType, setHelpType] = useState<"video" | "online" | null>(null);
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [description, setDescription] = useState("");
 
   const calendarDays = Array.from({ length: 35 }, (_, i) => {
-    const dayNumber = i - 1; 
+    const dayNumber = i - 1;
     return dayNumber > 0 && dayNumber <= 31 ? dayNumber : null;
   });
 
@@ -15,11 +18,13 @@ export function ClassForm() {
 
   const handleSubmit = () => {
     console.log({ helpType, selectedDate, selectedTime, description });
+
     if (!helpType) {
       alert("Selecione um tipo de ajuda!");
       return;
     }
-    alert("Solicitação enviada!");
+
+    navigate("/inbox");
   };
 
   return (
@@ -31,7 +36,7 @@ export function ClassForm() {
         <div className="form-section">
           <label className="section-label">TIPO DE AJUDA</label>
           
-          <div 
+          <div
             className={`selection-box ${helpType === "video" ? "selected" : ""}`}
             onClick={() => setHelpType(helpType === "video" ? null : "video")}
           >
@@ -41,9 +46,8 @@ export function ClassForm() {
             </div>
           </div>
 
-          <div 
+          <div
             className={`selection-box ${helpType === "online" ? "selected" : ""}`}
-            // Lógica de Toggle: Se já for "online", muda para null. Senão, vira "online".
             onClick={() => setHelpType(helpType === "online" ? null : "online")}
           >
             <span>AULA ONLINE</span>
@@ -53,7 +57,6 @@ export function ClassForm() {
           </div>
         </div>
 
-        {/* SEÇÃO 2: CALENDÁRIO */}
         {helpType === "online" && (
           <div className="form-section fade-in">
             <label className="section-label">CALENDÁRIO</label>
@@ -77,26 +80,23 @@ export function ClassForm() {
               ))}
             </div>
 
-            {/* Horários */}
             <div className="time-slots">
               {timeSlots.map((time) => (
-                <div 
-                  key={time} 
+                <div
+                  key={time}
                   className={`time-box ${selectedTime === time ? "selected" : ""}`}
-                  // Lógica de Toggle para Horários
                   onClick={() => setSelectedTime(selectedTime === time ? null : time)}
                 >
-                  <span>{time}</span>
-                  <div className="radio-circle small">
-                    {selectedTime === time && <div className="radio-dot small" />}
-                  </div>
+                <span>{time}</span>
+                <div className="radio-circle small">
+                  {selectedTime === time && <div className="radio-dot small" />}
                 </div>
-              ))}
+              </div>
+            ))}
             </div>
           </div>
         )}
 
-        {/* SEÇÃO 3: DESCRIÇÃO */}
         <div className="form-section">
           <label className="section-label">DESCREVA SUA SOLICITAÇÃO</label>
           <textarea
@@ -106,7 +106,6 @@ export function ClassForm() {
           />
         </div>
 
-        {/* BOTÃO ENVIAR */}
         <div className="form-actions">
           <button className="btn-submit" onClick={handleSubmit}>
             Enviar

@@ -48,9 +48,7 @@ export function Profile() {
 
         const id = getCurrentUserId();
         if (!id) {
-          if (alive) {
-            setErr("Usuário não autenticado.");
-          }
+          if (alive) setErr("Usuário não autenticado.");
           return;
         }
         if (!alive) return;
@@ -99,14 +97,14 @@ export function Profile() {
       return;
     }
 
-    // Se estava em modo visualização, apenas entra em modo edição
+    // se estava só visualizando, entra em modo edição
     if (!isEditing) {
       setSaveErr(null);
       setIsEditing(true);
       return;
     }
 
-    // Se já está editando, agora tentamos salvar
+    // se já está em edição, tenta salvar
     const payload = {
       nome: user.nome,
       email: user.email,
@@ -120,11 +118,10 @@ export function Profile() {
       setSaving(true);
       setSaveErr(null);
 
-      // agora usa o endpoint correto do back
       const updated = await apiPut<UsuarioPerfil>(
         "/api/usuarios/editar",
         payload,
-        { id: userId },
+        { id: userId }
       );
 
       setUser((prev) => ({
@@ -161,16 +158,24 @@ export function Profile() {
       <h1 className="profile-title">Perfil</h1>
 
       <div className="profile-content">
-        {/* COLUNA ESQUERDA: Avatar e Bio */}
+        {/* COLUNA ESQUERDA */}
         <aside className="profile-sidebar">
           <div className="avatar-placeholder">
-            {avatarSrc && (
+            {avatarSrc && !avatarFailed ? (
               <img
                 src={avatarSrc}
                 alt={`Foto de perfil de ${user.nome}`}
                 className="avatar-image"
                 onError={() => setAvatarFailed(true)}
               />
+            ) : (
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="avatar-icon"
+              >
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
             )}
           </div>
 
@@ -194,12 +199,10 @@ export function Profile() {
           {saveErr && <p className="error-text">{saveErr}</p>}
         </aside>
 
-        {/* COLUNA DIREITA: Dados de cadastro */}
-        <section className="profile-main">
-          <h2 className="section-title">Dados de Cadastro</h2>
-
+        {/* COLUNA DIREITA*/}
+        <section className="profile-form">
           <div className="form-group">
-            <label htmlFor="nome">Nome completo:</label>
+            <label htmlFor="nome">Nome:</label>
             <input
               type="text"
               id="nome"
@@ -250,7 +253,7 @@ export function Profile() {
             />
           </div>
 
-          <div className="profile-actions">
+          <div className="form-actions">
             <button
               className="btn-edit-profile"
               onClick={handleToggleEdit}

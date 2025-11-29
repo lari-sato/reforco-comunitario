@@ -1,20 +1,23 @@
-// HelpButton.tsx
 import { useNavigate } from "react-router-dom";
 
-export function HelpButton() {
-  const navigate = useNavigate();
+interface HelpButtonProps {
+  disabled?: boolean;
+}
 
-  function handleClick() {
-    navigate("/classform");
-  }
+export function HelpButton({ disabled }: HelpButtonProps) {
+  const navigate = useNavigate();
 
   return (
     <button
       type="button"
       className="btn-help"
-      onClick={handleClick}
+      disabled={disabled}
+      onClick={() => {
+        if (disabled) return;
+        navigate("/classform");
+      }}
     >
-      Solicitar Ajuda
+      Solicitar ajuda
     </button>
   );
 }
