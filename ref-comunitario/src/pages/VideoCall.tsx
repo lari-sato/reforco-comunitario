@@ -32,7 +32,6 @@ export function VideoCall() {
     wsRef.current = ws;
 
     ws.onopen = () => {
-      // ok
     };
 
     ws.onerror = () => {
@@ -43,14 +42,13 @@ export function VideoCall() {
       const payload: any = safeParse(ev.data);
       if (!payload) return;
 
-      // segue a lógica do post: se receber "offer" vira RECEIVING; se "answer", sinaliza no peer
+      // se receber "offer" vira RECEIVING; se "answer", sinaliza no peer
       if (payload.type === "offer") {
         setOfferSignal(payload);
         setState(ConnState.RECEIVING);
       } else if (payload.type === "answer") {
         peerRef.current?.signal(payload);
       } else if (payload.type === "candidate") {
-        // se usar trickle:true e quiser repassar ICE manualmente (aqui estamos com trickle:false por padrão)
         peerRef.current?.signal(payload);
       }
     };
