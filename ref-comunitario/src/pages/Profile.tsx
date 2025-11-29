@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
-import { apiGet, apiPost } from "../lib/api";
+import { apiGet, apiPut } from "../lib/api";
 import type { Usuario } from "../types";
 
 type UsuarioPerfil = Usuario & {
@@ -15,8 +15,20 @@ const API_BASE = (import.meta.env.VITE_API_URL || "http://localhost:8080").repla
   ""
 );
 
+function getCurrentUserId(): number | null {
+  try {
+    const raw = localStorage.getItem("rc_auth");
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { id?: number };
+    return typeof parsed.id === "number" ? parsed.id : null;
+  } catch {
+    return null;
+  }
+}
+
 export function Profile() {
   const [user, setUser] = useState<UsuarioPerfil | null>(null);
+  const [userId, setUserId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState<string | null>(null);
 
@@ -34,7 +46,17 @@ export function Profile() {
         setErr(null);
         setLoading(true);
 
-        const data = await apiGet<Usuario>("/api/usuarios/perfil");
+        const id = getCurrentUserId();
+        if (!id) {
+          if (alive) {
+            setErr("Usuário não autenticado.");
+          }
+          return;
+        }
+        if (!alive) return;
+        setUserId(id);
+
+        const data = await apiGet<UsuarioPerfil>("/api/usuarios/perfil", { id });
         if (!alive) return;
 
         const roles = Array.isArray(data.roles) ? data.roles : [];
@@ -72,6 +94,10 @@ export function Profile() {
 
   async function handleToggleEdit() {
     if (!user) return;
+    if (userId == null) {
+      setSaveErr("Usuário não autenticado.");
+      return;
+    }
 
     // Se estava em modo visualização, apenas entra em modo edição
     if (!isEditing) {
@@ -94,8 +120,12 @@ export function Profile() {
       setSaving(true);
       setSaveErr(null);
 
-      // Ajuste o endpoint se o back usar outro caminho para update
-      const updated = await apiPost<Usuario>("/api/usuarios/perfil", payload);
+      // agora usa o endpoint correto do back
+      const updated = await apiPut<UsuarioPerfil>(
+        "/api/usuarios/editar",
+        payload,
+        { id: userId },
+      );
 
       setUser((prev) => ({
         ...(prev ?? {}),
@@ -157,14 +187,19 @@ export function Profile() {
               onChange={handleInputChange}
               readOnly={!isEditing}
               className="profile-input bio-input"
+              placeholder="Conte um pouco sobre você..."
             />
           </div>
+
+          {saveErr && <p className="error-text">{saveErr}</p>}
         </aside>
 
-        {/* COLUNA DIREITA: Formulário */}
-        <section className="profile-form">
+        {/* COLUNA DIREITA: Dados de cadastro */}
+        <section className="profile-main">
+          <h2 className="section-title">Dados de Cadastro</h2>
+
           <div className="form-group">
-            <label htmlFor="nome">Nome:</label>
+            <label htmlFor="nome">Nome completo:</label>
             <input
               type="text"
               id="nome"
@@ -215,12 +250,10 @@ export function Profile() {
             />
           </div>
 
-          {saveErr && <p className="profile-error">{saveErr}</p>}
-
-          <div className="form-actions">
+          <div className="profile-actions">
             <button
               type="button"
-              className="btn-edit-profile"
+              className="primary-button"
               onClick={handleToggleEdit}
               disabled={saving}
             >

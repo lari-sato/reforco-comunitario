@@ -23,15 +23,24 @@ export function Login() {
     if (disabled) return;
 
     try {
-      const resp = await apiPost<AuthResponse>("/api/registro/login", { email, senha });
+      const resp = await apiPost<AuthResponse>("/api/registro/login", {
+        email,
+        senha,
+      });
 
       if (!resp.autenticado) {
         alert("Usuário ou senha inválidos.");
         return;
       }
 
-      // Aqui poderíamos guardar o usuário em algum estado global / storage.
-      // Por enquanto, apenas seguimos para a tela de tópicos.
+      // guarda dados mínimos do usuário autenticado
+      const stored = JSON.stringify({
+        id: resp.id,
+        nome: resp.nome,
+        email,
+      });
+      localStorage.setItem("rc_auth", stored);
+
       navigate("/topics");
     } catch (err) {
       console.error(err);
@@ -42,9 +51,9 @@ export function Login() {
   return (
     <AuthLayout
       variant="login"
-      title="Bem-vindo(a) de volta"
-      ctaText="Ainda não tem conta?"
-      ctaLinkText="Cadastrar"
+      title="Entre agora!"
+      ctaText="Não possui conta?"
+      ctaLinkText="Registre-se"
       ctaHref="/register"
       onSubmit={handleSubmit}
     >
@@ -52,7 +61,7 @@ export function Login() {
         <input
           id="login-email"
           type="email"
-          placeholder="email@exemplo.com"
+          placeholder="voce@exemplo.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
