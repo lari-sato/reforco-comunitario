@@ -7,7 +7,7 @@ import { Profile } from "./pages/Profile";
 import { Topics } from "./pages/Topics";
 import { Tutors } from "./pages/Tutors";
 import { ClassForm } from "./pages/ClassForm";
-import { VideoCall} from "./pages/VideoCall"; //não finalizada
+import { VideoCall} from "./pages/VideoCall"; //não finalizada/utilizada no momento
 
 export const AppRoutes = () => (
   <Routes>
