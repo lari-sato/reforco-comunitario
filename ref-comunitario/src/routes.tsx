@@ -7,7 +7,7 @@ import { Profile } from "./pages/Profile";
 import { Topics } from "./pages/Topics";
 import { Tutors } from "./pages/Tutors";
 import { ClassForm } from "./pages/ClassForm";
-import { VideoCall} from "./pages/VideoCall";
+import { VideoCall} from "./pages/VideoCall"; //não finalizada
 
 export const AppRoutes = () => (
   <Routes>
@@ -19,8 +19,7 @@ export const AppRoutes = () => (
     <Route path="/topics" element={<Topics />} />
     <Route path="/tutors" element={<Tutors />} />
     <Route path="/classform" element={<ClassForm />} />
-    <Route path="/videocall" element={<VideoCall />} />
-    
+   <Route path="/videocall" element={<VideoCall />} />
 
     <Route path="*" element={<Navigate to="/" />} />
   </Routes>

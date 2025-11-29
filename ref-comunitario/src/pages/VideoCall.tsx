@@ -1,3 +1,4 @@
+// IMPLEMENTAÇÃO INCOMPLETA - NÃO UTILIZADA NO MOMENTO
 import { useEffect, useMemo, useRef, useState } from "react";
 import SimplePeer, { type SignalData } from "simple-peer";
 
@@ -85,8 +86,6 @@ export function VideoCall() {
       initiator: isInitiator,
       trickle: false, // ofertas/answers únicas, simplifica o sinal
       stream: media,
-      // se for publicar, configure STUN/TURN aqui:
-      // config: { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] }
     });
 
     // se for responder, injeta a offer recebida
