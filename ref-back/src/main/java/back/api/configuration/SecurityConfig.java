@@ -25,29 +25,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // Desabilita CSRF (necessário para o upload de arquivos via API funcionar)
-            .csrf(AbstractHttpConfigurer::disable)
-            // Habilita CORS (para o Frontend React conseguir falar com o Backend)
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .authorizeHttpRequests(auth -> auth
-                // Libera as imagens na pasta uploads
-                .requestMatchers("/api/arquivos/**").permitAll()
-                
-                // Libera o cadastro e login de usuários
-                .requestMatchers("/api/registro/**").permitAll()
-                
-                // Libera a busca de instrutores
-                .requestMatchers("/api/instrutores/busca").permitAll()
-                
-                // Libera o Swagger (Documentação)
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
-
-                // Todo o resto exige autenticação (token/sessão)
-                .anyRequest().authenticated()
-            )
-            // Desabilita o formulário de login padrão (causava loop de redirecionamento)
-            .formLogin(AbstractHttpConfigurer::disable)
-            .httpBasic(AbstractHttpConfigurer::disable);
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()
+                )
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
@@ -57,7 +41,7 @@ public class SecurityConfig {
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         // Permite qualquer origem (em produção, colocar o domínio do front!)
-        configuration.setAllowedOrigins(List.of("*")); 
+        configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

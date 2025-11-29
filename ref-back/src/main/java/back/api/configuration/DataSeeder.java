@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -33,13 +34,14 @@ public class DataSeeder implements CommandLineRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Configurações injetadas (mesmas do Service)
+    // Configuração do armazenamento
     @Value("${API_BASE_URL}")
     private String apiBaseUrl;
 
+    // Variáveis para reuso
     private Topico tMat, tPort, tIng, tFis, tQuim, tBio, tHist, tGeo, tRed, tProg, tArtes, tFin;
-    private Usuario alunaAna;
-    private Usuario instrutorJoao;
+    private Usuario alunaAna, alunoPedro, alunaJulia, alunoLucas;
+    private Usuario instrutorJoao, instrutorAna, instrutorMarcos;
     private String baseUrl;
 
     @Override
@@ -49,14 +51,15 @@ public class DataSeeder implements CommandLineRunner {
             return;
         }
 
-        LOGGER.info("Iniciando 'seed' realista (Instrutores sem nota inicial)...");
+        LOGGER.info("Iniciando 'seed' completo...");
+        // Define a URL base para as imagens (ex: http://localhost:8080/api/arquivos/)
         this.baseUrl = apiBaseUrl + "/api/arquivos/";
 
         seedTopicos();
         seedUsuarios();
         seedInteracoes();
 
-        LOGGER.info("'Seed' concluído.");
+        LOGGER.info("'Seed' concluído com sucesso.");
     }
 
     private void seedTopicos() {
@@ -78,14 +81,14 @@ public class DataSeeder implements CommandLineRunner {
     private void seedUsuarios() {
         LOGGER.info("Seed: Criando Tutores e Alunos...");
 
-        criarInstrutor("Ana Souza", Set.of(tMat, tFis));
+        instrutorAna = criarInstrutor("Ana Souza", Set.of(tMat, tFis));
+        
         criarInstrutor("Bruno Oliveira", Set.of(tMat, tQuim));
         criarInstrutor("Daniel Ribeiro", Set.of(tMat, tFis, tQuim));
         
-        // João Pereira (Será avaliado no seedInteracoes)
         instrutorJoao = criarInstrutor("João Pereira", Set.of(tMat, tProg));
-
-        criarInstrutor("Marcos Carvalho", Set.of(tMat, tFin));
+        instrutorMarcos = criarInstrutor("Marcos Carvalho", Set.of(tMat, tFin));
+        
         criarInstrutor("Isabela Martins", Set.of(tPort, tRed));
         criarInstrutor("Camila Fernandes", Set.of(tIng, tRed));
         criarInstrutor("Eduarda Santos", Set.of(tQuim, tBio));
@@ -95,43 +98,99 @@ public class DataSeeder implements CommandLineRunner {
         criarInstrutor("Larissa Azevedo", Set.of(tArtes));
 
         alunaAna = new Usuario();
-        alunaAna.setNome("Aluna Teste");
-        alunaAna.setEmail("aluna@email.com");
+        alunaAna.setNome("Ana Silva");
+        alunaAna.setEmail("ana.aluna@email.com");
         alunaAna.setSenha(passwordEncoder.encode("senha123"));
         alunaAna.setTipo(TipoEnum.Aluno);
         alunaAna.setEscolaridade(EscolaridadeEnum.MedioInc);
+        alunaAna.setFotoPerfilUrl(baseUrl + "perfil-aluno-ana.jpg"); 
         alunaAna = usuarioRepository.save(alunaAna);
+
+        alunoPedro = new Usuario();
+        alunoPedro.setNome("Pedro Souza");
+        alunoPedro.setEmail("pedro.aluno@email.com");
+        alunoPedro.setSenha(passwordEncoder.encode("senha123"));
+        alunoPedro.setTipo(TipoEnum.Aluno);
+        alunoPedro.setEscolaridade(EscolaridadeEnum.FundInc);
+        alunoPedro.setFotoPerfilUrl(baseUrl + "perfil-aluno-pedro.jpg"); 
+        alunoPedro = usuarioRepository.save(alunoPedro);
+
+        alunaJulia = new Usuario();
+        alunaJulia.setNome("Julia Alencar");
+        alunaJulia.setEmail("julia.aluna@email.com");
+        alunaJulia.setSenha(passwordEncoder.encode("senha123"));
+        alunaJulia.setTipo(TipoEnum.Aluno);
+        alunaJulia.setEscolaridade(EscolaridadeEnum.MedioComp);
+        alunaJulia.setFotoPerfilUrl(baseUrl + "perfil-aluno-julio.jpg"); 
+        alunaJulia = usuarioRepository.save(alunaJulia);
+
+        alunoLucas = new Usuario();
+        alunoLucas.setNome("Lucas Gabinatti");
+        alunoLucas.setEmail("lucas.aluno@email.com");
+        alunoLucas.setSenha(passwordEncoder.encode("senha123"));
+        alunoLucas.setTipo(TipoEnum.Aluno);
+        alunoLucas.setEscolaridade(EscolaridadeEnum.SupInc);
+        alunoLucas.setFotoPerfilUrl(baseUrl + "perfil-aluno-lucas.jpg"); 
+        alunoLucas = usuarioRepository.save(alunoLucas);
     }
 
     private void seedInteracoes() {
-        LOGGER.info("Seed: Criando Agendamentos e Avaliações...");
+        LOGGER.info("Seed: Gerando solicitações distribuídas entre os alunos...");
 
-        // 1. Agendamento Aceito e Realizado
-        Agendamento aceito = new Agendamento();
-        aceito.setAluno(alunaAna);
-        aceito.setInstrutor(instrutorJoao);
-        aceito.setData_hora(LocalDateTime.now().minusDays(1)); // Ontem
-        aceito.setStatus(StatusEnum.Aceito);
-        Agendamento agendamentoSalvo = agendamentoRepository.save(aceito);
+        List<Usuario> alunos = List.of(alunaAna, alunoPedro, alunaJulia, alunoLucas);
+
+        // Gera 15 solicitações mistas (Agendamento e Vídeo)
+        for (int i = 1; i <= 15; i++) {
+            LocalDateTime dataBase = LocalDateTime.now().plusDays(i).withHour(8 + (i % 10)).withMinute(0);
+            
+            // Escolhe um aluno da lista de forma cíclica
+            Usuario alunoDaVez = alunos.get(i % alunos.size());
+
+            if (i % 2 == 0) {
+                // PAR = Chamada (Agendamento)
+                Agendamento ag = new Agendamento();
+                ag.setAluno(alunoDaVez);
+                // Alterna instrutores (Marcos ou Ana)
+                ag.setInstrutor(i % 4 == 0 ? instrutorMarcos : instrutorAna); 
+                ag.setData_hora(dataBase);
+                ag.setStatus(StatusEnum.Solicitado);
+                agendamentoRepository.save(ag);
+
+            } else {
+                // ÍMPAR = Videoaula
+                SolicitacaoVideoaula sol = new SolicitacaoVideoaula();
+                sol.setAluno(alunoDaVez);
+                sol.setInstrutor(instrutorJoao);
+                sol.setTopico(tProg);
+                sol.setDescricao("Olá, sou " + alunoDaVez.getNome() + ". Preciso de ajuda no exercício #" + i);
+                sol.setStatus(StatusEnum.Solicitado);
+                sol.setDataSolicitacao(dataBase.minusDays(1));
+                solicitacaoRepository.save(sol);
+            }
+        }
+
+        LOGGER.info("Seed: Criando histórico de aula para Julia e João...");
+        
+        Agendamento passado = new Agendamento();
+        passado.setAluno(alunaJulia);
+        passado.setInstrutor(instrutorJoao);
+        passado.setData_hora(LocalDateTime.now().minusDays(5));
+        passado.setStatus(StatusEnum.Aceito);
+        Agendamento salvo = agendamentoRepository.save(passado);
 
         Aula aula = new Aula();
-        aula.setAgendamento(agendamentoSalvo);
-        aula.setLink("https://meet.google.com/seed-test");
+        aula.setAgendamento(salvo);
+        aula.setLink("https://chamada/seed-julia");
         aulaRepository.save(aula);
 
-        // 2. Avaliação (Aluna avalia João)
         Avaliacao aval = new Avaliacao();
-        aval.setAluno(alunaAna);
+        aval.setAluno(alunaJulia);
         aval.setInstrutor(instrutorJoao);
         aval.setNota(5);
-        aval.setComentario("Professor excelente, explicou tudo sobre Java!");
-        aval.setData(LocalDateTime.now());
+        aval.setComentario("O professor João salvou meu semestre!");
+        aval.setData(LocalDateTime.now().minusDays(4));
         avaliacaoRepository.save(aval);
 
-        // Atualização manual da nota:
-        // Por usar um Seeder (sem passar pelo Service), atualizamos
-        // a nota do João manualmente para refletir a avaliação acima
-        LOGGER.info("Atualizando nota do Instrutor João Pereira após avaliação...");
         instrutorJoao.setAvaliacao(new BigDecimal("5.0"));
         usuarioRepository.save(instrutorJoao);
     }
@@ -153,7 +212,7 @@ public class DataSeeder implements CommandLineRunner {
         u.setTipo(TipoEnum.Instrutor);
         u.setEscolaridade(EscolaridadeEnum.SupComp);
         
-        // Começam sem nenhuma avaliaçào
+        // Começam sem avaliação
         u.setAvaliacao(null); 
         
         String primeiroNome = nome.split(" ")[0].toLowerCase();
