@@ -46,8 +46,6 @@ export function Tutors() {
           ))}
         </section>
 
-        <PagerButtons />
-
         <div className="tutors__footer">
           <BackButton to="/topics" />
           <HelpButton />

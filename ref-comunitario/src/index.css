@@ -365,48 +365,6 @@ body {
   color: #098553;
 }
 
-/* PagerButtons */
-.pager {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  margin: 8px 0 28px;
-}
-
-.pager__btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: #065535 ;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.pager__icon {
-  width: 20px;
-  height: 20px;
-  display: block;
-}
-
-.pager__btn:hover {
-  background: #098553 ;
-}
-
-.pager__btn:focus {
-  outline: 2px solid #A0DB8E ;
-  outline-offset: 2px;
-}
-
-.pager__label {
-  font-size: 16px;
-  color: #065535;
-  font-family: 'Poppins', Arial, sans-serif;
-}
-
 /* FilterButton */
 .filter-btn {
   width: 36px;
